@@ -1,0 +1,497 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TinBot"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core" xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
+    x:Class="TinBot.MainPage"
+    mc:Ignorable="d"
+    RequestedTheme="Dark"
+    Height="300"
+    >
+    <Page.Resources>
+        <Storyboard x:Name="piscando" AutoReverse="True">
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.StartPoint)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="159.5,82.8902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="159.5,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="159.5,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="159.5,126.797"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="123.907,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="123.907,103.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="80.0001,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="80.0001,103.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="36.0935,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="36.0935,103.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="0.500076,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="0.500076,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="0.500076,126.797"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="0.500076,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="0.500076,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="0.500076,82.8902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="0.500076,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="0.500076,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="0.500076,38.9836"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="36.0935,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="36.0935,63.3902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="80.0001,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="80.0001,63.3902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="123.907,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="123.907,63.3902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="159.5,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="159.5,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="159.5,38.9836"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="159.5,82.8902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0934,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="36.0934,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="36.0934,60"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="80,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="80,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="80,60"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="123.907,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="123.907,60"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="123.907,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="123.907,100"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="80,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="80,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="80,100"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0934,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.6" Value="36.0934,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.8" Value="36.0934,100"/>
+            </PointAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="piscando_duplo" AutoReverse="True">
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.StartPoint)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="159.5,82.8902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="159.5,83.3902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="159.5,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="159.5,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="159.5,126.797"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="159.5,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="159.5,127.297"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="123.907,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="123.907,103.39"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="123.907,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="123.907,162.89"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="80.0001,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="80.0001,103.39"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="80.0001,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="80.0001,162.89"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="36.0935,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="36.0935,103.39"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="36.0935,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="36.0935,162.89"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="0.500076,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="0.500076,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="0.500076,126.797"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="0.500076,127.297"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="0.500076,127.297"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="0.500076,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="0.500076,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="0.500076,82.8902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="0.500076,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="0.500076,83.3902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="0.500076,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="0.500076,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="0.500076,38.9836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="0.500076,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="0.500076,39.4836"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="36.0935,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="36.0935,63.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="36.0935,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="36.0935,3.89019"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="80.0001,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="80.0001,63.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="80.0001,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="80.0001,3.89019"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="123.907,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="123.907,63.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="123.907,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="123.907,3.89019"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="159.5,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="159.5,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="159.5,38.9836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="159.5,39.4836"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="159.5,39.4836"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="159.5,82.8902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="159.5,83.3902"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="159.5,83.3902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0934,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="36.0934,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="36.0934,60"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="36.0934,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="36.0934,0.5"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="80,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="80,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="80,60"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="80,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="80,0.5"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="123.907,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="123.907,60"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="123.907,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="123.907,0.5"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="123.907,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="123.907,100"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="123.907,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="123.907,159.5"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="80,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="80,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="80,100"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="80,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="80,159.5"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0934,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.8" Value="36.0934,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="36.0934,100"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.2" Value="36.0934,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.4" Value="36.0934,159.5"/>
+            </PointAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="feliz" AutoReverse="True">
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="123.907,63.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="80,63.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="36.0934,63.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="123.907,60"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="80,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="80,60"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0934,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="36.0934,60"/>
+            </PointAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="feliz_verde" AutoReverse="True">
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="123.907,83.3902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="80.0001,83.3902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="36.0935,83.3902"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="123.907,80"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="80,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="80,80"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0934,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.1" Value="36.0934,80"/>
+            </PointAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="olho1">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF21A3FD"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.1" Value="#FF00C31B"/>
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="olho2">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF21A3FD"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.1" Value="#FF00C31B"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="piscadela" AutoReverse="True">
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="123.907,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.4" Value="123.907,90"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.5" Value="123.907,90"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="80,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.4" Value="80,90"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.5" Value="80,90"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="36.0934,159.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.4" Value="36.0934,90"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.5" Value="36.0934,90"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="36.0934,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.4" Value="36.0934,50"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.5" Value="36.0934,50"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="80,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.4" Value="80,50"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.5" Value="80,50"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="123.907,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.4" Value="123.907,50"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.5" Value="123.907,50"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="159.5,123.907"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.4" Value="158.403,123.893"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.5" Value="158.403,123.893"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="159.5,36.0934"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.4" Value="160,60"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.5" Value="160,60"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.3" Value="0.5,36.0934"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.4" Value="0.5,60"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.5" Value="0.5,60"/>
+            </PointAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="triste" AutoReverse="True">
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="123.907,123.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="80,123.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="36.0934,123.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="45,48.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="115.729,-2.13058"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="80,23.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="123.912,120"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[0].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="80.005,120"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[1].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,162.89"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="36.0984,120"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="45,48.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="115.729,-2.13058"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="80,23.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="0.5,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="0.5,0.5"/>
+            </PointAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="olho2">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="-1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="bravo" AutoReverse="True">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="olho1">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF21A3FD"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FF9C0303"/>
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="olho2">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF21A3FD"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FF9C0303"/>
+            </ColorAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point2)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="36.0935,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="5,-11.61"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point3)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="80.0001,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="80,38.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point1)" Storyboard.TargetName="olho1">
+                <EasingPointKeyFrame KeyTime="0" Value="123.907,3.89019"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="116.533,62.7452"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point2)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="5,-11.61"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[2].(BezierSegment.Point3)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="80,38.39"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(Path.Data).(PathGeometry.Figures)[0].(PathFigure.Segments)[3].(BezierSegment.Point1)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="116.533,62.7452"/>
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="olho2">
+                <EasingPointKeyFrame KeyTime="0" Value="0.5,0.5"/>
+                <EasingPointKeyFrame KeyTime="0:0:0.2" Value="0.5,0.5"/>
+            </PointAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)" Storyboard.TargetName="olho2">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="-1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="normal" AutoReverse="True"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <VariableSizedWrapGrid >
+            <Button x:Name="BtnAcende" Click="BtnAcende_Click" Content="Acende!"/>
+            <Button x:Name="Btnapaga" Click="Btnapaga_Click" Content="Apaga!"/>
+            <Button x:Name="Btnteste" Click="Btnteste_Click" Content="Teste"/>
+            <Button x:Name="Btnteste2" Click="Btnteste_Click2" Content="Teste2"/>
+            <TextBox x:Name="Label" Text="Valor:" Margin="10,0" TextWrapping="Wrap"/>
+            <Button x:Name="btnVoz1" Content="Voz1" Click="btnVoz1_Click" VerticalAlignment="Stretch"/>
+            <MediaElement Name="media"/>
+        </VariableSizedWrapGrid>
+        <Grid Grid.Row="1" BorderBrush="Blue" BorderThickness="0" Height="163" VerticalAlignment="Center">
+            <Path x:Name="olho1" Fill="#FF21A3FD" Height="163.39"  Stroke="Black" UseLayoutRounding="False"  HorizontalAlignment="Left" Width="160" Margin="50,0,0,0" VerticalAlignment="Bottom">
+                <Path.Data>
+                    <PathGeometry FillRule="EvenOdd">
+                        <PathFigure IsFilled="True" IsClosed="True" StartPoint="159.5,83.3902">
+                            <BezierSegment Point3="80.0001,162.89" Point2="123.907,162.89" Point1="159.5,127.297"/>
+                            <BezierSegment Point3="0.500076,83.3902" Point2="0.500076,127.297" Point1="36.0935,162.89"/>
+                            <BezierSegment Point3="80.0001,3.89019" Point2="36.0935,3.89019" Point1="0.500076,39.4836"/>
+                            <BezierSegment Point3="159.5,83.3902" Point2="159.5,39.4836" Point1="123.907,3.89019"/>
+                        </PathFigure>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+            <Path x:Name="olho2" Fill="#FF21A3FD" Height="160" Stroke="Black"  Width="160.005" UseLayoutRounding="False"  HorizontalAlignment="Right" Margin="0,0,50,0">
+                <Path.RenderTransform>
+                    <CompositeTransform/>
+                </Path.RenderTransform>
+                <Path.Data>
+                    <PathGeometry FillRule="EvenOdd">
+                        <PathFigure IsFilled="True" IsClosed="True" StartPoint="159.5,80">
+                            <BezierSegment Point3="80,159.5" Point2="123.907,159.5" Point1="159.5,123.907"/>
+                            <BezierSegment Point3="0.5,80" Point2="0.5,123.907" Point1="36.0934,159.5"/>
+                            <BezierSegment Point3="80,0.5" Point2="36.0934,0.5" Point1="0.5,36.0934"/>
+                            <BezierSegment Point3="159.5,80" Point2="159.5,36.0934" Point1="123.907,0.5"/>
+                        </PathFigure>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+        </Grid>
+    </Grid>
+</Page>
