@@ -8,7 +8,7 @@
     x:Class="TinBot.MainPage"
     mc:Ignorable="d"
     RequestedTheme="Dark"
-    Height="300"
+     Unloaded="Page_Unloaded"
     >
     <Page.Resources>
         <Storyboard x:Name="piscando" AutoReverse="True">
@@ -452,46 +452,59 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="330"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <VariableSizedWrapGrid >
-            <Button x:Name="BtnAcende" Click="BtnAcende_Click" Content="Acende!"/>
-            <Button x:Name="Btnapaga" Click="Btnapaga_Click" Content="Apaga!"/>
-            <Button x:Name="Btnteste" Click="Btnteste_Click" Content="Teste"/>
-            <Button x:Name="Btnteste2" Click="Btnteste_Click2" Content="Teste2"/>
-            <TextBox x:Name="Label" Text="Valor:" Margin="10,0" TextWrapping="Wrap"/>
-            <Button x:Name="btnVoz1" Content="Voz1" Click="btnVoz1_Click" VerticalAlignment="Stretch"/>
+        <Grid >
+            <Button x:Name="BtnAcende" Click="BtnAcende_Click" Content="Acende!" Margin="10,5,0,293"/>
+            <Button x:Name="Btnapaga" Click="Btnapaga_Click" Content="Apaga!" Margin="10,46,0,252" RenderTransformOrigin="0.478,1.188" Width="74"/>
+            <Button x:Name="Btnteste" Click="Btnteste_Click" Content="Teste" Margin="10,83,0,215"/>
+            <Button x:Name="Btnteste2" Click="Btnteste_Click2" Content="Teste2" Margin="10,120,0,178"/>
+            <TextBox x:Name="Label" Text="Valor:" Height="60" TextWrapping="Wrap" Margin="0,260,0,10"/>
+            <Button x:Name="btnVoz1" Content="Voz1" Click="btnVoz1_Click" VerticalAlignment="Bottom" Margin="0,0,576,146" Height="27" HorizontalAlignment="Right"/>
             <MediaElement Name="media"/>
-        </VariableSizedWrapGrid>
-        <Grid Grid.Row="1" BorderBrush="Blue" BorderThickness="0" Height="163" VerticalAlignment="Center">
-            <Path x:Name="olho1" Fill="#FF21A3FD" Height="163.39"  Stroke="Black" UseLayoutRounding="False"  HorizontalAlignment="Left" Width="160" Margin="50,0,0,0" VerticalAlignment="Bottom">
-                <Path.Data>
-                    <PathGeometry FillRule="EvenOdd">
-                        <PathFigure IsFilled="True" IsClosed="True" StartPoint="159.5,83.3902">
-                            <BezierSegment Point3="80.0001,162.89" Point2="123.907,162.89" Point1="159.5,127.297"/>
-                            <BezierSegment Point3="0.500076,83.3902" Point2="0.500076,127.297" Point1="36.0935,162.89"/>
-                            <BezierSegment Point3="80.0001,3.89019" Point2="36.0935,3.89019" Point1="0.500076,39.4836"/>
-                            <BezierSegment Point3="159.5,83.3902" Point2="159.5,39.4836" Point1="123.907,3.89019"/>
-                        </PathFigure>
-                    </PathGeometry>
-                </Path.Data>
-            </Path>
-            <Path x:Name="olho2" Fill="#FF21A3FD" Height="160" Stroke="Black"  Width="160.005" UseLayoutRounding="False"  HorizontalAlignment="Right" Margin="0,0,50,0">
-                <Path.RenderTransform>
-                    <CompositeTransform/>
-                </Path.RenderTransform>
-                <Path.Data>
-                    <PathGeometry FillRule="EvenOdd">
-                        <PathFigure IsFilled="True" IsClosed="True" StartPoint="159.5,80">
-                            <BezierSegment Point3="80,159.5" Point2="123.907,159.5" Point1="159.5,123.907"/>
-                            <BezierSegment Point3="0.5,80" Point2="0.5,123.907" Point1="36.0934,159.5"/>
-                            <BezierSegment Point3="80,0.5" Point2="36.0934,0.5" Point1="0.5,36.0934"/>
-                            <BezierSegment Point3="159.5,80" Point2="159.5,36.0934" Point1="123.907,0.5"/>
-                        </PathFigure>
-                    </PathGeometry>
-                </Path.Data>
-            </Path>
+            <TextBox x:Name="txtString" Text="Out:" TextWrapping="Wrap" Margin="0,226,0,75" HorizontalAlignment="Left" Width="321"/>
+            <TextBox x:Name="txtSys" Text="Sys:" TextWrapping="Wrap" Margin="0,226,-2,75" HorizontalAlignment="Right" Width="321"/>
+            <Slider x:Name="sldHand" HorizontalAlignment="Left" Margin="89,-2,0,0" VerticalAlignment="Top" Width="235" Height="57" Value="90" Maximum="179" Minimum="1" Header="Mão" 
+                     ValueChanged="sldHand_ValueChanged"/>
+            <Slider x:Name="sldArm" HorizontalAlignment="Left" Margin="89,49,0,0" VerticalAlignment="Top" Width="235" Height="57" Value="90" Maximum="179" Minimum="1" Header="LeftArm" 
+            	ValueChanged="sldArm_ValueChanged" />
+            <Slider x:Name="sldRightArnm" HorizontalAlignment="Left" Margin="89,99,0,0" VerticalAlignment="Top" Width="235" Height="57" Value="90" Maximum="179" Minimum="1" Header="RightArm" ValueChanged="sldRightArnm_ValueChanged" />
+            <Slider x:Name="sldTorso" HorizontalAlignment="Left" Margin="356,-2,0,0" VerticalAlignment="Top" Width="235" Height="57" Value="90" Maximum="179" Minimum="1" Header="Torso" ValueChanged="sldTorso_ValueChanged"/>
+            <Slider x:Name="sldHeadY" HorizontalAlignment="Left" Margin="356,49,0,0" VerticalAlignment="Top" Width="235" Height="57" Value="90" Maximum="179" Minimum="1" Header="HeadY" ValueChanged="sldHeadY_ValueChanged"/>
         </Grid>
+        <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+
+            <Grid BorderBrush="Blue" BorderThickness="0" Height="200" VerticalAlignment="Center" >
+                <Path x:Name="olho1" Fill="#FF21A3FD" Height="163.39"  Stroke="Black" UseLayoutRounding="False"  HorizontalAlignment="Left" Width="160" Margin="50,0,0,0" VerticalAlignment="Center">
+                    <Path.Data>
+                        <PathGeometry FillRule="EvenOdd">
+                            <PathFigure IsFilled="True" IsClosed="True" StartPoint="159.5,83.3902">
+                                <BezierSegment Point3="80.0001,162.89" Point2="123.907,162.89" Point1="159.5,127.297"/>
+                                <BezierSegment Point3="0.500076,83.3902" Point2="0.500076,127.297" Point1="36.0935,162.89"/>
+                                <BezierSegment Point3="80.0001,3.89019" Point2="36.0935,3.89019" Point1="0.500076,39.4836"/>
+                                <BezierSegment Point3="159.5,83.3902" Point2="159.5,39.4836" Point1="123.907,3.89019"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+                <Path x:Name="olho2" Fill="#FF21A3FD" Height="160" Stroke="Black"  Width="160.005" UseLayoutRounding="False"  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0">
+                    <Path.RenderTransform>
+                        <CompositeTransform/>
+                    </Path.RenderTransform>
+                    <Path.Data>
+                        <PathGeometry FillRule="EvenOdd">
+                            <PathFigure IsFilled="True" IsClosed="True" StartPoint="159.5,80">
+                                <BezierSegment Point3="80,159.5" Point2="123.907,159.5" Point1="159.5,123.907"/>
+                                <BezierSegment Point3="0.5,80" Point2="0.5,123.907" Point1="36.0934,159.5"/>
+                                <BezierSegment Point3="80,0.5" Point2="36.0934,0.5" Point1="0.5,36.0934"/>
+                                <BezierSegment Point3="159.5,80" Point2="159.5,36.0934" Point1="123.907,0.5"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+            </Grid>
+        </Border>
+
     </Grid>
 </Page>
