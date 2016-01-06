@@ -100,8 +100,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\Body.cs" />
+    <Compile Include="Commands\SerialOutController.cs" />
     <Compile Include="Commands\TinBotAction.cs" />
     <Compile Include="Commands\Commands.cs" />
+    <Compile Include="Helpers\FirmataHelpers.cs" />
     <Compile Include="Helpers\VoiceHelpers.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

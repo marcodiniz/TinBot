@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Microsoft.Maker.RemoteWiring;
 using static System.Math;
@@ -17,13 +18,14 @@ namespace TinBot.Commands
 
             _timer.Interval = TimeSpan.FromMilliseconds(5);
             _timer.Tick += TimerOnTick;
+
         }
 
         private readonly bool _inverse;
         public RemoteDevice Device { get; }
         public byte Pin { get; }
         public decimal TargetPosition { get; private set; }
-        public decimal CurrentPosition { get; private set; } = 0;
+        public decimal CurrentPosition { get; private set; } = 90;
         public decimal Speed { get; set; } = 10;
         public decimal CurrentSpeed { get; set; } = 1;
         public decimal Acceleration { get; set; }

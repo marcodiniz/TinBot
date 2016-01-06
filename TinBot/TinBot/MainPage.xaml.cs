@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.SpeechSynthesis;
@@ -40,17 +41,16 @@ namespace TinBot
         private VoiceInformation _voice;
         private Commands.Commands _commands;
 
-        private ServoController _servoMao;
-        private ServoController _servoRightArm;
-        private ServoController _servoLeftArm;
-        private ServoController _servoTorso;
-        private ServoController _servoHeadY;
+        private Body _body;
 
         public MainPage()
         {
             this.InitializeComponent();
 
             DispatcherHelper.Dispatcher = Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher;
+            _usb = new UsbSerial("VID_1A86", "PID_7523");
+
+            _body = new Body(_usb);
 
             _commands = new Commands.Commands(media,
                 new Dictionary<Storyboard, int>()
@@ -81,7 +81,7 @@ namespace TinBot
             keepScreenOnRequest.RequestActive();
 
 
-            _commands.ExecuteAction(TinBotAction.MakeSpeakAction("Apresente-se", "marcaoneia"));
+            //_commands.ExecuteAction(TinBotAction.MakeSpeakAction("Apresente-se", "marcaoneia"));
 
             var view = ApplicationView.GetForCurrentView();
             //view.TryEnterFullScreenMode();
@@ -89,7 +89,6 @@ namespace TinBot
             var voices = SpeechSynthesizer.AllVoices;
             _voice = voices.FirstOrDefault(v => v.DisplayName.Contains("Daniel"));
 
-            _usb = new Microsoft.Maker.Serial.UsbSerial("VID_1A86", "PID_7523");
             //_bluetooth = new BluetoothSerial("TinBot");
 
             //_bluetooth.ConnectionEstablished += () => Label.Text = "Conectado! - ";
@@ -99,25 +98,25 @@ namespace TinBot
             //_bluetooth.ConnectionLost += message => Label.Text = "Lost: " + message;
             //_bluetooth.ConnectionLost += message => _bluetooth.begin(57600, SerialConfig.SERIAL_8N1);
 
-            _uno = new RemoteDevice(_usb);
-            
-            _uno.DeviceConnectionLost += message => ExecuteOnMainThread(() => Label.Text = "Uno Lost " + message);
-            _uno.DeviceConnectionFailed += message => ExecuteOnMainThread(() => Label.Text = "Uno Failed " + message);
-            _uno.DeviceReady += () => ExecuteOnMainThread(() =>
+            //_uno = new RemoteDevice(_usb);
+
+            //_uno.DeviceConnectionLost += message => ExecuteOnMainThread(() => Label.Text = "Uno Lost " + message);
+            //_uno.DeviceConnectionFailed += message => ExecuteOnMainThread(() => Label.Text = "Uno Failed " + message);
+            _body.Arduino.DeviceReady += () => ExecuteOnMainThread(() =>
             {
                 UnoReady = true;
                 Label.Text = "Uno Ready ";
-            
             });
 
-            _uno.StringMessageReceived += message => ExecuteOnMainThread(() => txtString.Text = message);
-            _uno.SysexMessageReceived += (command, message) =>
-            {
-                var str = message.ReadString(255);
-                this.txtSys.Text = str;
-            };
+            //_uno.StringMessageReceived += message => ExecuteOnMainThread(() => txtString.Text = message);
+            //_uno.SysexMessageReceived += (command, message) =>
+            //{
+            //    var str = message.ReadString(255);
+            //    this.txtSys.Text = str;
+            //};
 
-            _usb.begin(9600, SerialConfig.SERIAL_8N1);
+            _body.Connect();
+
 
             this.Unloaded += (sender, args) => _bluetooth.Dispose();
         }
@@ -126,13 +125,19 @@ namespace TinBot
 
         private void BtnAcende_Click(object sender, RoutedEventArgs e)
         {
-            //_uno.analogWrite(13, 500);
-            _uno.digitalWrite(13, PinState.HIGH);
+            _body.Arduino.digitalWrite(13, PinState.HIGH);
+            //_body.Arduino.pinMode("A1", PinMode.OUTPUT);
+            //_body.Arduino.digitalWrite(1, PinState.HIGH);
         }
 
-        private void Btnapaga_Click(object sender, RoutedEventArgs e)
+        private async void Btnapaga_Click(object sender, RoutedEventArgs e)
         {
-            _uno.digitalWrite(13, PinState.LOW);
+            _body.Arduino.digitalWrite(13, PinState.LOW);
+ 
+            await _body.SerialOut.SetValue(0, false,false);
+            await _body.SerialOut.SetValue(1, true,false);
+            await _body.SerialOut.SetValue(2, true,false);
+            await _body.SerialOut.SetValue(3, true);
         }
 
         private void Btnteste_Click(object sender, RoutedEventArgs e)
@@ -143,7 +148,8 @@ namespace TinBot
         private void Btnteste_Click2(object sender, RoutedEventArgs e)
         {
             Label.Text = "...";
-            ;           // _bluetooth.begin(9600, SerialConfig.SERIAL_8N1);
+            _usb.begin(9600, SerialConfig.SERIAL_8N1);
+            // _bluetooth.begin(9600, SerialConfig.SERIAL_8N1);
             //  normal.Completed += (o, o1) => bravo.Begin();
             //PlayAndPause(bravo);
         }
@@ -164,9 +170,9 @@ namespace TinBot
         {
             if (UnoReady)
             {
-                ushort speed =10;
+                ushort speed = 10;
                 ushort acc = 1000;
-                _servoMao.Move((ushort)sldHand.Value, speed, acc);
+                _body.ServoHand.Move((ushort)sldHand.Value, speed, acc);
             }
         }
 
@@ -174,9 +180,9 @@ namespace TinBot
         {
             if (UnoReady)
             {
-                ushort speed =20;
+                ushort speed = 20;
                 ushort acc = 15;
-                _servoLeftArm.Move((ushort)sldArm.Value, speed, acc);
+                _body.ServoLeftArm.Move((ushort)sldArm.Value, speed, acc);
             }
         }
 
@@ -186,7 +192,7 @@ namespace TinBot
             {
                 ushort speed = 20;
                 ushort acc = 15;
-                _servoRightArm.Move((ushort)sldRightArnm.Value, speed, acc);
+                _body.ServoRightArm.Move((ushort)sldRightArnm.Value, speed, acc);
             }
         }
 
@@ -196,7 +202,7 @@ namespace TinBot
             {
                 ushort speed = 10;
                 ushort acc = 7;
-                _servoTorso.Move((ushort)sldTorso.Value, speed, acc);
+                _body.ServoTorso.Move((ushort)sldTorso.Value, speed, acc);
             }
         }
 
@@ -206,7 +212,17 @@ namespace TinBot
             {
                 ushort speed = 10;
                 ushort acc = 7;
-                _servoHeadY.Move((ushort)sldHeadY.Value, speed, acc);
+                _body.ServoHeadY.Move((ushort)sldHeadY.Value, speed, acc);
+            }
+        }
+
+        private void sldHeadX_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (UnoReady)
+            {
+                ushort speed = 10;
+                ushort acc = 7;
+                _body.ServoHeadX.Move((ushort)sldHeadX.Value, speed, acc);
             }
         }
     }

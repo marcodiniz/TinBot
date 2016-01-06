@@ -472,6 +472,7 @@
             <Slider x:Name="sldRightArnm" HorizontalAlignment="Left" Margin="89,99,0,0" VerticalAlignment="Top" Width="235" Height="57" Value="90" Maximum="179" Minimum="1" Header="RightArm" ValueChanged="sldRightArnm_ValueChanged" />
             <Slider x:Name="sldTorso" HorizontalAlignment="Left" Margin="356,-2,0,0" VerticalAlignment="Top" Width="235" Height="57" Value="90" Maximum="179" Minimum="1" Header="Torso" ValueChanged="sldTorso_ValueChanged"/>
             <Slider x:Name="sldHeadY" HorizontalAlignment="Left" Margin="356,49,0,0" VerticalAlignment="Top" Width="235" Height="57" Value="90" Maximum="179" Minimum="1" Header="HeadY" ValueChanged="sldHeadY_ValueChanged"/>
+            <Slider x:Name="sldHeadX" HorizontalAlignment="Left" Margin="356,106,0,0" VerticalAlignment="Top" Width="235" Height="57" Value="90" Maximum="179" Minimum="1" Header="HeadY" ValueChanged="sldHeadX_ValueChanged"/>
         </Grid>
         <Border HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
 

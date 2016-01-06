@@ -13,12 +13,14 @@ namespace TinBot.Commands
         private readonly UsbSerial _usbSerial;
         private readonly BluetoothSerial _bluetoothSerial;
         private Action _connect;
-        private ServoController _servoHand;
-        private ServoController _servoRightArm;
-        private ServoController _servoLeftArm;
-        private ServoController _servoTorso;
-        private ServoController _servoHeadY;
-        private ServoController _servoHeadX;
+        public ServoController ServoHand { get; private set; }
+        public ServoController ServoRightArm { get; private set; }
+        public ServoController ServoLeftArm { get; private set; }
+        public ServoController ServoTorso { get; private set; }
+        public ServoController ServoHeadY { get; private set; }
+        public ServoController ServoHeadX { get; private set; }
+
+        public SerialOutController SerialOut { get; set; }
 
         public RemoteDevice Arduino { get; }
 
@@ -28,6 +30,8 @@ namespace TinBot.Commands
             Arduino = new RemoteDevice(bluetoothSerial);
             _connect = () => bluetoothSerial.begin(9600, SerialConfig.SERIAL_8N1);
 
+            SerialOut = new SerialOutController(Arduino, 12, 8, 7);
+
             Setup();
         }
 
@@ -36,6 +40,8 @@ namespace TinBot.Commands
             _usbSerial = usbSerial;
             Arduino = new RemoteDevice(usbSerial);
             _connect = () => _usbSerial.begin(9600, SerialConfig.SERIAL_8N1);
+
+            SerialOut = new SerialOutController(Arduino, 12, 8, 7);
 
             Setup();
         }
@@ -48,25 +54,28 @@ namespace TinBot.Commands
                 Connect();
             };
 
-            Arduino.DeviceReady += ArduinoOnDeviceReady;
+            Arduino.DeviceReady += async () => await ArduinoOnDeviceReady();
 
-            _servoHand = new ServoController(Arduino, 05);
-            _servoRightArm = new ServoController(Arduino, 06);
-            _servoLeftArm = new ServoController(Arduino, 09, true);
-            _servoTorso = new ServoController(Arduino, 03);
-            _servoHeadY = new ServoController(Arduino, 10);
-            _servoHeadX = new ServoController(Arduino, 11);
+            ServoHand = new ServoController(Arduino, 09);
+            ServoRightArm = new ServoController(Arduino, 05);
+            ServoLeftArm = new ServoController(Arduino, 06, true);
+            ServoTorso = new ServoController(Arduino, 03);
+            ServoHeadY = new ServoController(Arduino, 11);
+            ServoHeadX = new ServoController(Arduino, 10);
 
         }
 
-        private void ArduinoOnDeviceReady()
+        private async Task ArduinoOnDeviceReady()
         {
-            _servoHand.Attach();
-            _servoRightArm.Attach();
-            _servoLeftArm.Attach();
-            _servoTorso.Attach();
-            _servoHeadY.Attach();
-            _servoHeadX.Attach();
+            ServoHand.Attach();
+            ServoRightArm.Attach();
+            ServoLeftArm.Attach();
+            ServoTorso.Attach();
+            ServoHeadY.Attach();
+            ServoHeadX.Attach();
+
+            await Task.Delay(1000);
+            await SerialOut.Reset(false);
         }
 
         public void Connect()
