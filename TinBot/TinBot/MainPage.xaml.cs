@@ -134,7 +134,7 @@ namespace TinBot
         {
             _body.Arduino.digitalWrite(13, PinState.LOW);
  
-            await _body.SerialOut.SetValue(0, false,false);
+            await _body.SerialOut.SetValue(0, true,false);
             await _body.SerialOut.SetValue(1, true,false);
             await _body.SerialOut.SetValue(2, true,false);
             await _body.SerialOut.SetValue(3, true);

@@ -27,8 +27,6 @@ namespace TinBot.Commands
 
         private readonly List<Storyboard> _animationQeue = new List<Storyboard>();
 
-
-
         public Commands(MediaElement mediaElement, Dictionary<Storyboard, int> facesPauseTime, Dictionary<string, Storyboard> faces)
         {
             MediaElement = mediaElement;
@@ -49,7 +47,7 @@ namespace TinBot.Commands
             }
         }
 
-        public async void Speak(string text)
+        public async Task Speak(string text)
         {
             var tts = VoiceHelpers.WrapWithSSML(text);
             var ssStream = await Synth.SynthesizeSsmlToStreamAsync(tts);
