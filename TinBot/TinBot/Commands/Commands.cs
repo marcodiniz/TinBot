@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using TinBot.Helpers;
+using TinBot.Portable;
 using Buffer = Windows.Storage.Streams.Buffer;
 
 namespace TinBot.Commands
@@ -22,38 +23,68 @@ namespace TinBot.Commands
     {
         public MediaElement MediaElement { get; }
         public SpeechSynthesizer Synth { get; } = new SpeechSynthesizer();
-        public Dictionary<string, Storyboard> Faces { get; }
+        public Dictionary<ETinBotFaces, Storyboard> Faces { get; }
+        public Dictionary<ETinBotServo, ServoController> Servos { get; }
         public Dictionary<Storyboard, int> FacesPauseTime { get; }
 
         private readonly List<Storyboard> _animationQeue = new List<Storyboard>();
 
-        public Commands(MediaElement mediaElement, Dictionary<Storyboard, int> facesPauseTime, Dictionary<string, Storyboard> faces)
+        public Commands(MediaElement mediaElement, Dictionary<Storyboard, int> facesPauseTime,
+            Dictionary<ETinBotFaces, Storyboard> faces, Dictionary<ETinBotServo, ServoController> servos)
         {
             MediaElement = mediaElement;
             FacesPauseTime = facesPauseTime;
             Faces = faces;
+            Servos = servos;
 
             var voice = SpeechSynthesizer.AllVoices.FirstOrDefault(v => v.DisplayName.Contains("Daniel"));
             Synth.Voice = voice;
             mediaElement.MarkerReached += MediaElementOnMarkerReached;
         }
 
-        public void ExecuteAction(TinBotAction action)
+        public async Task ExecuteAction(TinBotAction action)
         {
-            if (action.Type == EActionType.Speak)
+            switch (action.Type)
             {
-                var str = action.SpeakText ?? VoiceHelpers.Phrases[action.SpeakKey];
-                Speak(str);
+                case EActionType.Speak:
+                    await Speak(((SpeakAction)action).Text);
+                    break;
+                case EActionType.Face:
+                    var sb = Faces[((FaceAction)action).TinBotFaces];
+                    PlayAndPause(sb);
+                    break;
+                case EActionType.Move:
+                    var moveAction = (MovementAcion)action;
+                    await
+                        Servos[moveAction.Servo].Move(moveAction.TargetPosition, moveAction.Speed,
+                            moveAction.Acceleratton);
+                    break;
+                case EActionType.Saved:
+                    var foundAction =
+                        TinBotHelpers.SavedActions.FirstOrDefault(
+                            x => ((SavedAction)action).ActionName.Equals(x.Name, StringComparison.OrdinalIgnoreCase));
+                    if (foundAction != null)
+                        await ExecuteAction(foundAction);
+                    break;
+                case EActionType.Sequence:
+                    var sequenceAction = (SequenceAction)action;
+                    foreach (var paralellAction in sequenceAction.Sequence)
+                    {
+                        var awaiters = paralellAction.Select(ExecuteAction).ToArray();
+                        Task.WaitAll(awaiters);
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         public async Task Speak(string text)
         {
-            var tts = VoiceHelpers.WrapWithSSML(text);
+            var tts = TinBotHelpers.WrapWithSSML(text);
             var ssStream = await Synth.SynthesizeSsmlToStreamAsync(tts);
             MediaElement.Markers.Clear();
-            ssStream.Markers.ToList().ForEach(x=>MediaElement.Markers.Add(new TimelineMarker() {Text = x.Text,Time = x.Time}));
-
+            ssStream.Markers.ToList().ForEach(x => MediaElement.Markers.Add(new TimelineMarker { Text = x.Text, Time = x.Time }));
 
             MediaElement.SetSource(ssStream, ssStream.ContentType);
             MediaElement.Play();
@@ -61,12 +92,7 @@ namespace TinBot.Commands
 
         private void MediaElementOnMarkerReached(object sender, TimelineMarkerRoutedEventArgs e)
         {
-            //check if the requested action is a Face Animaton
-            if (Faces.ContainsKey(e.Marker.Text))
-            {
-                var sb = Faces[e.Marker.Text];
-                PlayAndPause(sb);
-            }
+                ExecuteAction(new SavedAction(e.Marker.Text));
         }
 
         private void PlayAndPause(Storyboard sb)
@@ -74,21 +100,21 @@ namespace TinBot.Commands
             sb.Completed -= PlayNext;
             sb.Completed += PlayNext;
 
-            if (_animationQeue.Count == 0)
+            if (!_animationQeue.Any())
             {
                 _animationQeue.Add(sb);
-                PlayNext(null, null);
+                PlayNext();
             }
             else
             {
-                _animationQeue.Skip(1).ToList().ForEach(x => _animationQeue.Remove(x));
+                _animationQeue.RemoveRange(1, _animationQeue.Count - 1);
                 _animationQeue.Add(sb);
                 if (_animationQeue[0].GetCurrentTime().TotalMilliseconds - FacesPauseTime[_animationQeue[0]] < 1)
                     _animationQeue[0].Resume();
             }
         }
 
-        private void PlayNext(object sender, object o)
+        private void PlayNext(object sender = null, object o = null)
         {
             if (sender != null)
                 _animationQeue.Remove(sender as Storyboard);
@@ -104,13 +130,12 @@ namespace TinBot.Commands
                         new Timer(state =>
                         {
                             if (_animationQeue.Count < 2)
-                                dispatcher.RunAsync(CoreDispatcherPriority.High, () => storyBoard.Pause());
+                                DispatcherHelper.ExecuteOnMainThread(() => storyBoard.Pause()).Wait();
                         }, null, pause, Timeout.Infinite);
                     }
                     storyBoard.Begin();
                 }
             }
-
         }
     }
 }

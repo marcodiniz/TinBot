@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="TinBot.ActionsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TinBot"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:commands="using:TinBot.Commands"
+    mc:Ignorable="d"
+    DataContext="{Binding }"
+    >
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Button x:Name="button" Content="Back" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Click="button_Click"/>
+        <ListBox x:Name="listBox" ItemsSource="{Binding}" SelectionChanged="ListBox_OnSelectionChanged" DoubleTapped="ListBox_OnDoubleTapped" HorizontalAlignment="Left" Margin="10,47,0,10" Width="192"/>
+        <Pivot Background="DarkBlue" Margin="207,47,10,10">
+            <PivotItem Name="PivotItemMovment" Header="Movment">
+                <StackPanel>
+                    <TextBlock>Name</TextBlock>
+                    <TextBox Text="{Binding Path=Name, Mode=TwoWay}"></TextBox>
+                    <TextBlock>Target </TextBlock>
+                    <TextBox Text="{Binding TargetPosition, Mode=TwoWay}"></TextBox>
+                    <TextBlock>Speed</TextBlock>
+                    <TextBox Text="{Binding Speed, Mode=TwoWay}"></TextBox>
+                    <TextBlock>Acc</TextBlock>
+                    <TextBox Text="{Binding Acceleratton, Mode=TwoWay}"></TextBox>
+                    <ComboBox ItemsSource="{x:Bind TinBotServos}"
+                                      SelectedItem="{Binding Servo}"></ComboBox>
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
+
+    </Grid>
+</Page>

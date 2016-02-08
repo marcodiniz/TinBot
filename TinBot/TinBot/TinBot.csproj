@@ -11,7 +11,7 @@
     <AssemblyName>TinBot</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
@@ -96,22 +96,26 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionsPage.xaml.cs">
+      <DependentUpon>ActionsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\Body.cs" />
-    <Compile Include="Commands\Movement.cs" />
     <Compile Include="Commands\SerialOutController.cs" />
-    <Compile Include="Commands\TinBotAction.cs" />
     <Compile Include="Commands\Commands.cs" />
+    <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\FirmataHelpers.cs" />
-    <Compile Include="Helpers\VoiceHelpers.cs" />
+    <Compile Include="Helpers\TinBotHelpers.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\ServoController.cs" />
     <Compile Include="Helpers\DispatcherHelper.cs" />
+    <Compile Include="TinBotWebStuff.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -134,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ActionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -152,11 +160,20 @@
       <Project>{8376216c-282a-4927-b9ef-c2d545fe0bca}</Project>
       <Name>Microsoft.Maker.Serial</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TinBot.Portable\TinBot.Portable.csproj">
+      <Project>{8a61fb21-bf98-409d-8e26-0223dc74a9ab}</Project>
+      <Name>TinBot.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
       <Name>BehaviorsXamlSDKManaged</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>json.net\Portable\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

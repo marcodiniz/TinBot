@@ -23,6 +23,7 @@ using Microsoft.Maker.RemoteWiring;
 using Microsoft.Maker.Serial;
 using TinBot.Commands;
 using TinBot.Helpers;
+using TinBot.Portable;
 using static TinBot.Helpers.DispatcherHelper;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -39,19 +40,16 @@ namespace TinBot
         private RemoteDevice _uno;
         private Dictionary<Storyboard, int> _animationPauseTime;
         private VoiceInformation _voice;
-        private Commands.Commands _commands;
-
-        private Body _body;
+        private readonly Commands.Commands _commands;
+        private readonly Body _body;
 
         public MainPage()
         {
             this.InitializeComponent();
+            DispatcherHelper.Dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
 
-            DispatcherHelper.Dispatcher = Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher;
             _usb = new UsbSerial("VID_1A86", "PID_7523");
-
             _body = new Body(_usb);
-
             _commands = new Commands.Commands(media,
                 new Dictionary<Storyboard, int>()
                 {
@@ -64,22 +62,32 @@ namespace TinBot
                     [piscando_duplo] = 0,
                     [triste] = 200
                 },
-                new Dictionary<string, Storyboard>()
+                new Dictionary<ETinBotFaces, Storyboard>()
                 {
-                    ["bravo"] = bravo,
-                    ["feliz"] = feliz,
-                    ["feliz_verde"] = feliz_verde,
-                    ["normal"] = normal,
-                    ["piscadela"] = piscadela,
-                    ["piscando"] = piscando,
-                    ["piscando_duplo"] = piscando_duplo,
-                    ["triste"] = triste
-                });
+                    [ETinBotFaces.Angry] = bravo,
+                    [ETinBotFaces.Happy] = feliz,
+                    [ETinBotFaces.HappyGreen] = feliz_verde,
+                    [ETinBotFaces.Normal] = normal,
+                    [ETinBotFaces.UniBlink] = piscadela,
+                    [ETinBotFaces.Blink] = piscando,
+                    [ETinBotFaces.BlinkDouble] = piscando_duplo,
+                    [ETinBotFaces.Sad] = triste
+                },
+                new Dictionary<ETinBotServo, ServoController>()
+                {
+                    [ETinBotServo.ServoHand] = _body.ServoHand,  
+                    [ETinBotServo.ServoHeadX] = _body.ServoHeadX,  
+                    [ETinBotServo.ServoHeadY] = _body.ServoHeadY,  
+                    [ETinBotServo.ServoLeftArm] = _body.ServoLeftArm,  
+                    [ETinBotServo.ServoRightArm] = _body.ServoRightArm,  
+                    [ETinBotServo.ServoTorso] = _body.ServoTorso,  
+                }
+                );
+            TinBotHelpers.Commands = _commands;
 
-
+             
             var keepScreenOnRequest = new Windows.System.Display.DisplayRequest();
             keepScreenOnRequest.RequestActive();
-
 
             //_commands.ExecuteAction(TinBotAction.MakeSpeakAction("Apresente-se", "marcaoneia"));
 
@@ -117,9 +125,7 @@ namespace TinBot
 
             _body.Connect();
 
-
-            this.Unloaded += (sender, args) => _bluetooth.Dispose();
-        }
+            }
 
         public bool UnoReady { get; set; }
 
@@ -142,36 +148,26 @@ namespace TinBot
 
         private void Btnteste_Click(object sender, RoutedEventArgs e)
         {
-            _commands.ExecuteAction(TinBotAction.MakeSpeakAction("Apresente-se", "marcaoneia"));
+            _commands.ExecuteAction(new SavedAction("introduce"));
         }
 
         private void Btnteste_Click2(object sender, RoutedEventArgs e)
         {
-            Label.Text = "...";
-            _usb.begin(9600, SerialConfig.SERIAL_8N1);
-            // _bluetooth.begin(9600, SerialConfig.SERIAL_8N1);
-            //  normal.Completed += (o, o1) => bravo.Begin();
-            //PlayAndPause(bravo);
+            _commands.ExecuteAction(new SavedAction("goodmorning1"));
         }
 
 
-
-        private async void btnVoz1_Click(object sender, RoutedEventArgs e)
+        private void btnVoz1_Click(object sender, RoutedEventArgs e)
         {
-            _commands.ExecuteAction(TinBotAction.MakeSpeakAction("Apresente-se", "introduce"));
-        }
-
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            _bluetooth.Dispose();
+            _commands.ExecuteAction(new SavedAction("goodmorning2"));
         }
 
         private void sldHand_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (UnoReady)
             {
-                ushort speed = 10;
-                ushort acc = 1000;
+                ushort speed = 5;
+                ushort acc = 2;
                 _body.ServoHand.Move((ushort)sldHand.Value, speed, acc);
             }
         }
@@ -180,9 +176,7 @@ namespace TinBot
         {
             if (UnoReady)
             {
-                ushort speed = 20;
-                ushort acc = 15;
-                _body.ServoLeftArm.Move((ushort)sldArm.Value, speed, acc);
+                _commands.ExecuteAction(new MovementAcion(ETinBotServo.ServoLeftArm, (int) sldArm.Value, 20, 3));
             }
         }
 
@@ -191,7 +185,7 @@ namespace TinBot
             if (UnoReady)
             {
                 ushort speed = 20;
-                ushort acc = 15;
+                ushort acc = 2;
                 _body.ServoRightArm.Move((ushort)sldRightArnm.Value, speed, acc);
             }
         }
@@ -210,7 +204,7 @@ namespace TinBot
         {
             if (UnoReady)
             {
-                ushort speed = 10;
+                ushort speed = 50;
                 ushort acc = 7;
                 _body.ServoHeadY.Move((ushort)sldHeadY.Value, speed, acc);
             }
@@ -220,10 +214,15 @@ namespace TinBot
         {
             if (UnoReady)
             {
-                ushort speed = 10;
+                ushort speed = 50;
                 ushort acc = 7;
                 _body.ServoHeadX.Move((ushort)sldHeadX.Value, speed, acc);
             }
+        }
+
+        private void BtnGoTOActions_OnClick(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (ActionsPage));
         }
     }
 

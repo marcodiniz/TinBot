@@ -1,0 +1,16 @@
+{
+  "supports": {},
+  "dependencies": {
+  },
+  "frameworks": {
+    ".NETPortable,Version=v4.5,Profile=Profile7": {},
+    "net45+win": {
+      "wrappedProject": "TinBot.Portable.csproj",
+      "bin": {
+        "assembly": "obj/{configuration}/TinBot.Portable.dll",
+        "pdb": "obj/{configuration}/TinBot.Portable.pdb"
+      }
+    }
+  },
+  "version": "1.0.0-*"
+}

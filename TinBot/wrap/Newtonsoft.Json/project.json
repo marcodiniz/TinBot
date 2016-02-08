@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "net45+win": {
+      "bin": {
+        "assembly": "C:\\Users\\marco\\.nuget\\packages\\Newtonsoft.Json\\8.0.2\\lib\\portable-net40+sl5+wp80+win8+wpa81\\Newtonsoft.Json.dll"
+      }
+    }
+  }
+}

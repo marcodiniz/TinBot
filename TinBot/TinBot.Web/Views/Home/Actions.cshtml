@@ -1,0 +1,91 @@
+﻿@using System.Threading.Tasks
+@using TinBot.Web.ViewModels
+@model  TinBot.Web.ViewModels.ActionsVM
+
+
+<form asp-controller="Home" asp-action="Actions" method="POST">
+    <div class="panel">
+        <input type="submit" value="Save" class="btn btn-default" />
+    </div>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#mov">Movements</a></li>
+            <li><a data-toggle="tab" href="#spe">Speak</a></li>
+            <li><a data-toggle="tab" href="#fac">Faces</a></li>
+            <li><a data-toggle="tab" href="#sav">Saved</a></li>
+            <li><a data-toggle="tab" href="#seq">Sequences</a></li>
+        </ul>
+        <div class="tab-content well">
+            <div id="mov" class="tab-pane active">
+                @for (int i = 0; i < Model.MovementAcions.Count; i++)
+                {
+                    <div class="panel panel-info">
+                        <div class="panel-heading">@Model.MovementAcions[i].Description</div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-addon">Json</span>
+                                <textarea asp-for="MovementAcions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="spe" class="tab-pane">
+                @for (int i = 0; i < Model.SpeakActions.Count; i++)
+                {
+                    <div class="panel panel-info">
+                        <div class="panel-heading">@Model.SpeakActions[i].Description</div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-addon">Json</span>
+                                <textarea asp-for="SpeakActions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="fac" class="tab-pane">
+                @for (int i = 0; i < Model.FaceActions.Count; i++)
+                {
+                    <div class="panel panel-info">
+                        <div class="panel-heading">@Model.FaceActions[i].Description</div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-addon">Json</span>
+                                <textarea asp-for="FaceActions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="sav" class="tab-pane">
+                @for (int i = 0; i < Model.SavedActions.Count; i++)
+                {
+                    <div class="panel panel-info">
+                        <div class="panel-heading">@Model.SavedActions[i].Description</div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-addon">Json</span>
+                                <textarea asp-for="SavedActions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="seq" class="tab-pane">
+                @for (int i = 0; i < Model.SequenceActions.Count; i++)
+                {
+                    <div class="panel panel-info">
+                        <div class="panel-heading">@Model.SequenceActions[i].Description</div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-addon">Json</span>
+                                <textarea asp-for="SequenceActions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</form>

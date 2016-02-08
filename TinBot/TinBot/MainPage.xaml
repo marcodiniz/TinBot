@@ -8,7 +8,6 @@
     x:Class="TinBot.MainPage"
     mc:Ignorable="d"
     RequestedTheme="Dark"
-     Unloaded="Page_Unloaded"
     >
     <Page.Resources>
         <Storyboard x:Name="piscando" AutoReverse="True">
@@ -460,6 +459,7 @@
             <Button x:Name="Btnapaga" Click="Btnapaga_Click" Content="Apaga!" Margin="10,46,0,252" RenderTransformOrigin="0.478,1.188" Width="74"/>
             <Button x:Name="Btnteste" Click="Btnteste_Click" Content="Teste" Margin="10,83,0,215"/>
             <Button x:Name="Btnteste2" Click="Btnteste_Click2" Content="Teste2" Margin="10,120,0,178"/>
+            <Button x:Name="btnGoTOActions" Content="Actions" Click="BtnGoTOActions_OnClick" VerticalAlignment="Bottom" Margin="89,0,487,147" Height="27" HorizontalAlignment="Stretch"/>
             <TextBox x:Name="Label" Text="Valor:" Height="60" TextWrapping="Wrap" Margin="0,260,0,10"/>
             <Button x:Name="btnVoz1" Content="Voz1" Click="btnVoz1_Click" VerticalAlignment="Bottom" Margin="0,0,576,146" Height="27" HorizontalAlignment="Right"/>
             <MediaElement Name="media"/>
