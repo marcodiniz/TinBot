@@ -22,15 +22,20 @@ namespace TinBot.Web.ViewModels
         public List<ItemVM<string>> SpeakActions { get; set; } = new List<ItemVM<string>>();
         public List<ItemVM<string>> SavedActions { get; set; } = new List<ItemVM<string>>();
         public List<ItemVM<string>> SequenceActions { get; set; } = new List<ItemVM<string>>();
+        public List<ItemVM<string>> ToggleActions{ get; set; } = new List<ItemVM<string>>();
+
+        public List<ItemVM<string>> ListenKeys{ get; set; } = new List<ItemVM<string>>();
 
         public ActionsVM Load()
         {
-            MovementAcions = SuperDataBase.Actions.MovementAcions.Select(x => x.FromTinBotAction()).ToList();
-            FaceActions = SuperDataBase.Actions.FaceActions.Select(x => x.FromTinBotAction()).ToList();
-            SpeakActions = SuperDataBase.Actions.SpeakActions.Select(x => x.FromTinBotAction()).ToList();
-            SavedActions = SuperDataBase.Actions.SavedActions.Select(x => x.FromTinBotAction()).ToList();
-            SequenceActions = SuperDataBase.Actions.SequenceActions.Select(x => x.FromTinBotAction()).ToList();
+            MovementAcions = SuperDataBase.Actions.MovementAcions.Select(x => x.ToItemVM(ignoreNull:true)).ToList();
+            FaceActions = SuperDataBase.Actions.FaceActions.Select(x => x.ToItemVM(ignoreNull: true)).ToList();
+            SpeakActions = SuperDataBase.Actions.SpeakActions.Select(x => x.ToItemVM(ignoreNull: true)).ToList();
+            SavedActions = SuperDataBase.Actions.SavedActions.Select(x => x.ToItemVM(ignoreNull: true)).ToList();
+            SequenceActions = SuperDataBase.Actions.SequenceActions.Select(x => x.ToItemVM(ignoreNull: true)).ToList();
+            ToggleActions= SuperDataBase.Actions.ToggleActions.Select(x => x.ToItemVM(ignoreNull: true)).ToList();
 
+            ListenKeys = SuperDataBase.Actions.ListenKeys.Select(x => x.ToItemVM(ignoreNull: true)).ToList();
             return this;
         }
     }

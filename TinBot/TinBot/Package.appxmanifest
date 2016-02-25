@@ -32,14 +32,16 @@
     <uap:Capability Name="removableStorage" />
     <DeviceCapability Name="microphone" />
     <DeviceCapability Name="proximity" />
+    <DeviceCapability Name="bluetooth" />
+    <DeviceCapability Name="webcam" />
     <DeviceCapability Name="serialcommunication">
       <Device Id="any">
-        <Function Type="name:serialPort"/>
+        <Function Type="name:serialPort" />
       </Device>
     </DeviceCapability>
     <DeviceCapability Name="bluetooth.rfcomm">
       <Device Id="any">
-        <Function Type="name:serialPort"/>
+        <Function Type="name:serialPort" />
       </Device>
     </DeviceCapability>
   </Capabilities>

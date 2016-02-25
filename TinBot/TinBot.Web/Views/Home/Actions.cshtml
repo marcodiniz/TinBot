@@ -2,29 +2,42 @@
 @using TinBot.Web.ViewModels
 @model  TinBot.Web.ViewModels.ActionsVM
 
+@{ int collapseIndex = 0;}
 
 <form asp-controller="Home" asp-action="Actions" method="POST">
     <div class="panel">
         <input type="submit" value="Save" class="btn btn-default" />
     </div>
+
+
+
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#mov">Movements</a></li>
-            <li><a data-toggle="tab" href="#spe">Speak</a></li>
             <li><a data-toggle="tab" href="#fac">Faces</a></li>
+            <li><a data-toggle="tab" href="#tog">Toggles</a></li>
             <li><a data-toggle="tab" href="#sav">Saved</a></li>
             <li><a data-toggle="tab" href="#seq">Sequences</a></li>
+            <li><a data-toggle="tab" href="#spe">Speak</a></li>
+            <li><a data-toggle="tab" href="#lis">Listen</a></li>
         </ul>
         <div class="tab-content well">
             <div id="mov" class="tab-pane active">
                 @for (int i = 0; i < Model.MovementAcions.Count; i++)
                 {
                     <div class="panel panel-info">
-                        <div class="panel-heading">@Model.MovementAcions[i].Description</div>
-                        <div class="panel-body">
-                            <div class="input-group">
+                        <button class="test-button pull-left" type="button" style="margin: 7px;">=></button>
+                        <div class="panel-heading" data-toggle="collapse" data-target="#collapse@(++collapseIndex)">
+                            @Model.MovementAcions[i].Description
+                            <div class="pull-right">
+                                <input asp-for="MovementAcions[i].IsDeleted" />
+                                <span>delete</span>
+                            </div>
+                        </div>
+                        <div id="collapse@(collapseIndex)" class="panel-collapse collapse">
+                            <div class="panel-body input-group">
                                 <span class="input-group-addon">Json</span>
-                                <textarea asp-for="MovementAcions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                                <textarea asp-for="MovementAcions[i].Item" class="form-control" rows="9" style="width: 100%"></textarea>
                             </div>
                         </div>
                     </div>
@@ -34,11 +47,20 @@
                 @for (int i = 0; i < Model.SpeakActions.Count; i++)
                 {
                     <div class="panel panel-info">
-                        <div class="panel-heading">@Model.SpeakActions[i].Description</div>
-                        <div class="panel-body">
-                            <div class="input-group">
-                                <span class="input-group-addon">Json</span>
-                                <textarea asp-for="SpeakActions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                        <button class="test-button pull-left" type="button" style="margin: 7px;">=></button>
+                        <div class="panel-heading" data-toggle="collapse" data-target="#collapse@(++collapseIndex)">
+                            @Model.SpeakActions[i].Description
+                            <div class="pull-right">
+                                <input asp-for="SpeakActions[i].IsDeleted" />
+                                <span>delete</span>
+                            </div>
+                        </div>
+                        <div id="collapse@(collapseIndex)" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Json</span>
+                                    <textarea asp-for="SpeakActions[i].Item" class="form-control" rows="9" style="width: 100%"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -48,11 +70,43 @@
                 @for (int i = 0; i < Model.FaceActions.Count; i++)
                 {
                     <div class="panel panel-info">
-                        <div class="panel-heading">@Model.FaceActions[i].Description</div>
-                        <div class="panel-body">
-                            <div class="input-group">
-                                <span class="input-group-addon">Json</span>
-                                <textarea asp-for="FaceActions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                        <button class="test-button pull-left" type="button" style="margin: 7px;">=></button>
+                        <div class="panel-heading" data-toggle="collapse" data-target="#collapse@(++collapseIndex)">
+                            @Model.FaceActions[i].Description
+                            <div class="pull-right">
+                                <input asp-for="FaceActions[i].IsDeleted" />
+                                <span>delete</span>
+                            </div>
+                        </div>
+                        <div id="collapse@(collapseIndex)" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Json</span>
+                                    <textarea asp-for="FaceActions[i].Item" class="form-control" rows="9" style="width: 100%"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="tog" class="tab-pane">
+                @for (int i = 0; i < Model.ToggleActions.Count; i++)
+                {
+                    <div class="panel panel-info">
+                        <button class="test-button pull-left" type="button" style="margin: 7px;">=></button>
+                        <div class="panel-heading" data-toggle="collapse" data-target="#collapse@(++collapseIndex)">
+                            @Model.ToggleActions[i].Description
+                            <div class="pull-right">
+                                <input asp-for="ToggleActions[i].IsDeleted" />
+                                <span>delete</span>
+                            </div>
+                        </div>
+                        <div id="collapse@(collapseIndex)" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Json</span>
+                                    <textarea asp-for="ToggleActions[i].Item" class="form-control" rows="9" style="width: 100%"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,11 +116,20 @@
                 @for (int i = 0; i < Model.SavedActions.Count; i++)
                 {
                     <div class="panel panel-info">
-                        <div class="panel-heading">@Model.SavedActions[i].Description</div>
-                        <div class="panel-body">
-                            <div class="input-group">
-                                <span class="input-group-addon">Json</span>
-                                <textarea asp-for="SavedActions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                        <button class="test-button pull-left" type="button" style="margin: 7px;">=></button>
+                        <div class="panel-heading" data-toggle="collapse" data-target="#collapse@(++collapseIndex)">
+                            @Model.SavedActions[i].Description
+                            <div class="pull-right">
+                                <input asp-for="SavedActions[i].IsDeleted" />
+                                <span>delete</span>
+                            </div>
+                        </div>
+                        <div id="collapse@(collapseIndex)" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Json</span>
+                                    <textarea asp-for="SavedActions[i].Item" class="form-control" rows="9" style="width: 100%"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -76,16 +139,54 @@
                 @for (int i = 0; i < Model.SequenceActions.Count; i++)
                 {
                     <div class="panel panel-info">
-                        <div class="panel-heading">@Model.SequenceActions[i].Description</div>
-                        <div class="panel-body">
-                            <div class="input-group">
+                        <button class="test-button pull-left" type="button" style="margin: 7px;">=></button>
+                        <div class="panel-heading" data-toggle="collapse" data-target="#collapse@(++collapseIndex)">
+                            @Model.SequenceActions[i].Description
+                            <div class="pull-right">
+                                <input asp-for="SequenceActions[i].IsDeleted" />
+                                <span>delete</span>
+                            </div>
+                        </div>
+                        <div id="collapse@(collapseIndex)" class="panel-collapse collapse">
+                            <div class="panel-body">
                                 <span class="input-group-addon">Json</span>
-                                <textarea asp-for="SequenceActions[i].Item" class="form-control" rows="7" style="width: 100%"></textarea>
+                                <textarea asp-for="SequenceActions[i].Item" class="form-control" rows="9" style="width: 100%"></textarea>
                             </div>
                         </div>
                     </div>
                 }
             </div>
+            <div id="lis" class="tab-pane">
+                @for (int i = 0; i < Model.ListenKeys.Count; i++)
+                {
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            @*    <button class="test-button" type="button">=></button>*@
+                            @Model.ListenKeys[i].Description
+                            <div class="pull-right">
+                                <input asp-for="ListenKeys[i].IsDeleted" />
+                                <span>delete</span>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-addon">Json</span>
+                                <textarea asp-for="ListenKeys[i].Item" class="form-control" rows="5" style="width: 100%"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
         </div>
     </div>
 </form>
+@section scripts
+{
+    <script>
+        $('.test-button').click(function () {
+            var json = $(this).closest('.panel').find('textarea').val();
+            $.getJSON('@Url.Action("Enqueue")', { json: json });
+        })
+    </script>
+}

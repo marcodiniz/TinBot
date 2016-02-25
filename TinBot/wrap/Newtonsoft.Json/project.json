@@ -5,6 +5,12 @@
       "bin": {
         "assembly": "C:\\Users\\marco\\.nuget\\packages\\Newtonsoft.Json\\8.0.2\\lib\\portable-net40+sl5+wp80+win8+wpa81\\Newtonsoft.Json.dll"
       }
+    },
+    "dnx451": {
+      "bin": {
+        "assembly": "../../lib/dnx451/Newtonsoft.Json.dll",
+        "pdb": "../../TinBot/json.net/Net45/Newtonsoft.Json.pdb"
+      }
     }
   }
 }

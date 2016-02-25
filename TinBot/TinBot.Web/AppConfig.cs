@@ -8,5 +8,6 @@ namespace TinBot.Web
     public class AppConfig
     {
         public string ActionsFile { get; set; }
+        public string ConfigsFile { get; set; }
     }
 }

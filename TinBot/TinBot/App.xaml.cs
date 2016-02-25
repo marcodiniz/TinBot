@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -14,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using TinBot.Helpers;
 
 namespace TinBot
 {
@@ -46,7 +48,7 @@ namespace TinBot
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                this.DebugSettings.EnableFrameRateCounter = false;
             }
 #endif
 
@@ -79,7 +81,11 @@ namespace TinBot
             }
             // Ensure the current window is active
             Window.Current.Activate();
+
+            TinBotBoot();
         }
+
+
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails
@@ -104,5 +110,18 @@ namespace TinBot
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        private void TinBotBoot()
+        {
+            DispatcherHelper.SyncContext = TaskScheduler.FromCurrentSynchronizationContext();
+
+            this.UnhandledException += (sender, args) =>
+            {
+                var x = args.Exception;
+            };
+        }
+
+
+
     }
 }

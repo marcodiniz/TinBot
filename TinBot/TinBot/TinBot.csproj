@@ -102,9 +102,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Commands\Body.cs" />
-    <Compile Include="Commands\SerialOutController.cs" />
-    <Compile Include="Commands\Commands.cs" />
+    <Compile Include="Operations\Body.cs" />
+    <Compile Include="Operations\SerialOutController.cs" />
+    <Compile Include="Operations\Commands.cs" />
+    <Compile Include="Ear.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\FirmataHelpers.cs" />
     <Compile Include="Helpers\TinBotHelpers.cs" />
@@ -113,9 +114,9 @@
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\ServoController.cs" />
+    <Compile Include="Operations\ServoController.cs" />
     <Compile Include="Helpers\DispatcherHelper.cs" />
-    <Compile Include="TinBotWebStuff.cs" />
+    <Compile Include="TinBotData.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

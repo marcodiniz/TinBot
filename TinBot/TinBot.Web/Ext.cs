@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
 using TinBot.Portable;
@@ -42,12 +43,21 @@ namespace TinBot.Web
 
         }
 
-        public static ItemVM<string> FromTinBotAction(this TinBotAction a)
+        public static ItemVM<string> ToItemVM(this object a, bool deleted = false,bool ignoreNull = false)
         {
+            var settings = ignoreNull
+                ? new JsonSerializerSettings()
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    DefaultValueHandling = DefaultValueHandling.Ignore
+                }
+                : new JsonSerializerSettings();
+
             return new ItemVM<string>
             {
+                IsDeleted = deleted,
                 Description = a.ToString(),
-                Item = JsonConvert.SerializeObject(a, Formatting.Indented)
+                Item = JsonConvert.SerializeObject(a, Formatting.Indented, settings)
             };
         }
 

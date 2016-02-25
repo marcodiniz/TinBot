@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -21,14 +22,21 @@ namespace TinBot
     /// </summary>
     public sealed partial class ActionsPage : Page
     {
-        public IObservable<MovementAcion> MovementAcion { get; private set; }
-        public List<ETinBotServo> TinBotServos => TinBotHelpers.Values<ETinBotServo>();
+        public ObservableCollection<TinBotAction> ActionsQueue => TinBotData.ActionsQueue;
 
         public ActionsPage()
         {
             this.InitializeComponent();
 
-            listBox.DataContext = TinBotHelpers.SavedActions;
+
+            this.Loaded += (sender, args) =>
+            {
+                listBox.DataContext = TinBotData.ActionsQueue;
+                _txtLibraryUrl.Text = TinBotData.ApiLibraryUrl;
+                _txtQueueUrl.Text = TinBotData.ApiQueueUrl;
+                _txtUser.Text = TinBotData.ApiUser;
+                _txtPassword.Password = TinBotData.ApiPassword;
+            };
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -36,32 +44,12 @@ namespace TinBot
             Frame.GoBack();
         }
 
-        private void ListBox_OnDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        private void _btnSave_Click(object sender, RoutedEventArgs e)
         {
-            var action = listBox.SelectedItem as TinBotAction;
-            TinBotHelpers.Commands.ExecuteAction(action);
-        }
-
-
-        private void ListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var action = (TinBotAction)listBox.SelectedItem;
-            switch (action.Type)
-            {
-                case EActionType.Speak:
-                    break;
-                case EActionType.Face:
-                    break;
-                case EActionType.Move:
-                     PivotItemMovment.DataContext =  (MovementAcion) action;
-                    break;
-                case EActionType.Saved:
-                    break;
-                case EActionType.Sequence:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            TinBotData.ApiLibraryUrl = _txtLibraryUrl.Text;
+            TinBotData.ApiQueueUrl= _txtQueueUrl.Text;
+            TinBotData.ApiUser= _txtUser.Text;
+            TinBotData.ApiPassword = _txtPassword.Password;
         }
     }
 }
