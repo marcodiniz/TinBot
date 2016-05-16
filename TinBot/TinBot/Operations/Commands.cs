@@ -32,7 +32,7 @@ namespace TinBot.Operations
 
         private readonly List<Storyboard> _animationQueue = new List<Storyboard>();
         private int _actionsStackCount = 0;
-        private Body _body;
+        private readonly Body _body;
 
         public Commands(MediaElement mediaElement, Body body, Ear ear,
             Dictionary<Storyboard, int> facesPauseTime, Dictionary<ETinBotFaces, Storyboard> faces,
@@ -48,6 +48,8 @@ namespace TinBot.Operations
             var voice = SpeechSynthesizer.AllVoices.FirstOrDefault(v => v.DisplayName.Contains("Daniel"));
             Synth.Voice = voice;
 
+            SetupStandByBehaviors();
+
             TinBotData.ActionRequestArrived += (s, a) => ProcessActionsQueue();
 
             Ear.ActionRequested += (sender, action) =>
@@ -57,35 +59,55 @@ namespace TinBot.Operations
             };
         }
 
+        private void SetupStandByBehaviors()
+        {
+            PhoneState.OnStandByOn += async (sender, args) =>
+            {
+                Ear.StartListen();
+                await _body.DeAttachServos();
+            };
+
+            PhoneState.OnStandByOff += async (sender, args) =>
+            {
+                Ear.StopListen();
+                await _body.AttachServos();
+            };
+        }
+
         private void ProcessActionsQueue()
         {
-            if (!_body.IsReady)
-                return;
+            if (!_body.IsReady) return;
+
             var _lock = "lock";
             lock (_lock)
             {
-                if (_actionsStackCount >= 1 || !TinBotData.ActionsQueue.Any()) return;
+                if (_actionsStackCount >= 1) return;
 
-                Ear.StopListen();
-                _actionsStackCount++;
+                if (!TinBotData.ActionsQueue.Any())
+                {
+                    PhoneState.SetStandByOn();
+                    return;
+                }
+
+                if (PhoneState.IsStandByOn)
+                {
+                    PhoneState.SetStandByOff();
+                    Task.Delay(1000).Wait();
+                }
+
                 var nextAction = TinBotData.ActionsQueue[0];
-
-                //if (!nextAction.Name.Equals("rest", StringComparison.OrdinalIgnoreCase))
-                //    foreach (var servo in Servos.Values.Where(x => !x.IsAttached))
-                //    {
-                //        Task.Delay(100).Wait();
-                //        servo.Attach();
-                //    }
-
-                ExecuteAction(nextAction).Wait();
                 ExecuteOnMainThread(() => TinBotData.ActionsQueue.RemoveAt(0)).Wait();
-                ExecuteAction(new SavedAction("rest")).Wait();
-                _actionsStackCount--;
 
-                //if (!TinBotWebStuff.ActionsQueue.Any())
-                //    foreach (var servo in Servos.Values.Where(x => x.IsAttached))
-                //        servo.Deattach();
-                Ear.StartListen();
+                if (nextAction != null)
+                {
+                    _actionsStackCount++;
+
+                    ExecuteAction(nextAction).Wait();
+                    ExecuteAction(new SavedAction("rest")).Wait();
+
+                    _actionsStackCount--;
+                }
+
                 ProcessActionsQueue();
             }
         }
@@ -205,7 +227,7 @@ namespace TinBot.Operations
                               MediaElement.CurrentState == MediaElementState.Buffering ||
                               MediaElement.CurrentState == MediaElementState.Opening;
                 });
-                
+
                 await Task.Delay(500);
             }
         }

@@ -125,64 +125,6 @@ namespace TinBot
         {
             Label.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
         }
-
-        //private void sldHand_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        //{
-        //    if (UnoReady)
-        //    {
-        //        ushort speed = 5;
-        //        ushort acc = 2;
-        //        //_body.ServoHand.Move((ushort)sldHand.Value, speed, acc);
-        //    }
-        //}
-
-        //private void sldArm_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        //{
-        //    if (UnoReady)
-        //    {
-        //        //_commands.ExecuteAction(new MovementAcion(ETinBotServo.ServoLeftArm, (int)sldArm.Value, 20, 3));
-        //    }
-        //}
-
-        //private void sldRightArnm_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        //{
-        //    if (UnoReady)
-        //    {
-        //        ushort speed = 20;
-        //        ushort acc = 2;
-        //        //_body.ServoRightArm.Move((ushort)sldRightArnm.Value, speed, acc);
-        //    }
-        //}
-
-        //private void sldTorso_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        //{
-        //    if (UnoReady)
-        //    {
-        //        ushort speed = 10;
-        //        ushort acc = 7;
-        //        //_body.ServoTorso.Move((ushort)sldTorso.Value, speed, acc);
-        //    }
-        //}
-
-        //private void sldHeadY_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        //{
-        //    if (UnoReady)
-        //    {
-        //        ushort speed = 50;
-        //        ushort acc = 7;
-        //        //_body.ServoHeadY.Move((ushort)sldHeadY.Value, speed, acc);
-        //    }
-        //}
-
-        //private void sldHeadX_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        //{
-        //    if (UnoReady)
-        //    {
-        //        ushort speed = 50;
-        //        ushort acc = 7;
-        //        //_body.ServoHeadX.Move((ushort)sldHeadX.Value, speed, acc);
-        //    }
-        //}
     }
 
 }

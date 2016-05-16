@@ -99,13 +99,14 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionsPage.xaml.cs">
+    <Compile Include="Operations\ActionsPage.xaml.cs">
       <DependentUpon>ActionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Operations\Body.cs" />
+    <Compile Include="Operations\PhoneState.cs" />
     <Compile Include="Operations\SerialOutController.cs" />
     <Compile Include="Operations\Commands.cs" />
     <Compile Include="Ear.cs" />
@@ -142,7 +143,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ActionsPage.xaml">
+    <Page Include="Operations\ActionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,18 +153,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\remote-wiring\Microsoft.Maker.win10\Microsoft.Maker.Firmata\Microsoft.Maker.Firmata.vcxproj">
-      <Project>{f0a53bc9-c617-47dd-8b68-f91e3502d633}</Project>
-      <Name>Microsoft.Maker.Firmata</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\remote-wiring\Microsoft.Maker.win10\Microsoft.Maker.RemoteWiring\Microsoft.Maker.RemoteWiring.vcxproj">
-      <Project>{5a8b1bb1-7cd5-47c4-a1f7-d7bcf5facad1}</Project>
-      <Name>Microsoft.Maker.RemoteWiring</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\remote-wiring\Microsoft.Maker.win10\Microsoft.Maker.Serial\Microsoft.Maker.Serial.vcxproj">
-      <Project>{8376216c-282a-4927-b9ef-c2d545fe0bca}</Project>
-      <Name>Microsoft.Maker.Serial</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TinBot.Portable\TinBot.Portable.csproj">
       <Project>{8a61fb21-bf98-409d-8e26-0223dc74a9ab}</Project>
       <Name>TinBot.Portable</Name>

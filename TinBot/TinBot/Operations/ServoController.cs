@@ -44,6 +44,8 @@ namespace TinBot.Operations
         {
             await ExecuteOnMainThread(() => Device.SafePinMode(Pin, PinMode.SERVO));
             IsAttached = true;
+            ushort p = (ushort)(_inverse ? 180 - CurrentPosition: CurrentPosition);
+            await Device.AnalogWriteAwaitable(Pin, p);
         }
 
         public async Task Deattach()
@@ -54,6 +56,9 @@ namespace TinBot.Operations
 
         public async Task Move(int targetPosition, int speed = 10, int acceleration = 1)
         {
+            if (!IsAttached)
+                await Attach();
+
             if (speed == 0 | acceleration == 0)
                 speed = acceleration = 1;
 

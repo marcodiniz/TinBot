@@ -35,6 +35,14 @@ namespace TinBot.Helpers
             }
         }
 
+        public static void SafePinMode(this RemoteDevice device, string pin, PinMode pinMode)
+        {
+            lock (_lock)
+            {
+                device.pinMode(pin, pinMode);
+            }
+        }
+
         public static async Task DigitalWriteAwaitable(this RemoteDevice device, byte port, bool value, int releaseTime = 1)
         {
             //await ExecuteOnMainThread(() => device.digitalWrite(port, value.ToPinState()));

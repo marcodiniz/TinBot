@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Newtonsoft.Json;
 using TinBot.Portable;
 using static TinBot.Helpers.DispatcherHelper;
@@ -18,8 +21,6 @@ namespace TinBot
 {
     public static class TinBotData
     {
-
-        public static ActionsContainer ActionsLib { get; set; } = new ActionsContainer();
         public static ObservableCollection<TinBotAction> ActionsQueue { get; set; } = new ObservableCollection<TinBotAction>();
 
         public static Timer LibTimer { get; set; }
@@ -27,15 +28,19 @@ namespace TinBot
 
         public static event EventHandler ActionRequestArrived;
 
-        private static bool _initializing = true;
         private static ApplicationDataContainer _settings;
-        private static AuthenticationHeaderValue _authHeader => AuthenticationHeaderValue.Parse("basic " +
-                                                Convert.ToBase64String(
-                                                    Encoding.ASCII.GetBytes($"{ApiUser}:{ApiPassword}")));
+
+        private static AuthenticationHeaderValue _authHeader =>
+            AuthenticationHeaderValue.Parse("basic " +
+                                            Convert.ToBase64String(
+                                                Encoding.ASCII.GetBytes($"{ApiUser}:{ApiPassword}")));
+
+
+        public static ActionsContainer ActionsLib { get; set; }
 
         public static string ApiLibraryUrl
         {
-            get { return _settings.Values["ApiLibraryUrl"]?.ToString()??""; }
+            get { return _settings.Values["ApiLibraryUrl"]?.ToString() ?? ""; }
             set { _settings.Values["ApiLibraryUrl"] = value; }
         }
 
@@ -59,14 +64,25 @@ namespace TinBot
 
         static TinBotData()
         {
-            LibTimer = new Timer(s => SyncActionLibrary(), null, TimeSpan.FromSeconds(20), TimeSpan.FromSeconds(30));
-            QueueTimer = new Timer(s => SyncQueue(), null, TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(10));
-            _settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            Setup();
+        }
+
+        private static async Task Setup()
+        {
+            LibTimer = new Timer(s => SyncActionLibrary(), null, TimeSpan.FromSeconds(20), TimeSpan.FromSeconds(90));
+            QueueTimer = new Timer(s => SyncQueue(), null, TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(30));
+            _settings = ApplicationData.Current.LocalSettings;
+
+            var result = await ReadSetting<ActionsContainer>("ActionsLib");
+            ActionsLib = result?? new ActionsContainer();
+            var rest = ActionsLib["rest"];
+            if (rest != null)
+                ExecuteOnMainThread(() => ActionsQueue.Add(ActionsLib["rest"]));
         }
 
         private static void SyncQueue()
         {
-            if (_initializing)
+            if (!ActionsLib.AllActions().Any())
                 return;
 
             try
@@ -83,8 +99,6 @@ namespace TinBot
                             JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result,
                                 typeof(List<ActionContainer>));
 
-                    if (!result.Any())
-                        return;
 
                     foreach (var actionsContainer in result)
                     {
@@ -94,7 +108,10 @@ namespace TinBot
                             ExecuteOnMainThread(() => ActionsQueue.Add(arrived)).Wait();
                         }
                     }
-                    client.DeleteAsync(ApiQueueUrl).Wait();
+
+                    if (result.Any())
+                        client.DeleteAsync(ApiQueueUrl).Wait();
+
                     ActionRequestArrived?.Invoke(null, EventArgs.Empty);
 
                 }
@@ -111,30 +128,56 @@ namespace TinBot
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.UserAgent.ParseAdd("Chrome/22.0.1229.94");
             client.DefaultRequestHeaders.Authorization = _authHeader;
+            client.Timeout = TimeSpan.FromSeconds(30);
             try
             {
                 var response = client.GetAsync(ApiLibraryUrl).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
-                    ActionsLib =
-                        (ActionsContainer)
-                            JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result,
-                                typeof(ActionsContainer));
-
-                    if (_initializing)
-                    {
-                        Task.Delay(500).Wait();
-                        ExecuteOnMainThread(() => ActionsQueue.Add(ActionsLib["Rest"])).Wait();
-                        Task.Delay(300).Wait();
-                        ActionRequestArrived?.Invoke(null, EventArgs.Empty);
-                        _initializing = false;
-                    }
+                    var str = response.Content.ReadAsStringAsync().Result;
+                    SaveSetting("ActionsLib",str).Wait();
+                    ActionsLib = JsonConvert.DeserializeObject<ActionsContainer>(str);
                 }
             }
             catch (Exception ex)
             {
             }
+        }
+
+        internal static async Task<bool> SaveSetting(string key, object value)
+        {
+
+            var file =
+                await ApplicationData.Current.LocalFolder.CreateFileAsync(key, CreationCollisionOption.ReplaceExisting);
+            using (Stream fileStream = await file.OpenStreamForWriteAsync())
+            {
+                var str = value is string ? (string)value : JsonConvert.SerializeObject(value);
+                var bytes = Encoding.ASCII.GetBytes(str);
+                await fileStream.WriteAsync(bytes, 0, bytes.Length);
+                await fileStream.FlushAsync();
+            }
+            return true;
+        }
+
+        internal static async Task<T> ReadSetting<T>(string key) where T : class
+        {
+            T rr;
+
+            try
+            {
+                StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(key);
+                using (IInputStream inStream = await file.OpenSequentialReadAsync())
+                {
+                    var stream = new StreamReader(inStream.AsStreamForRead());
+                    rr = JsonConvert.DeserializeObject<T>(stream.ReadToEnd());
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                return null;
+            }
+            return rr;
         }
     }
 }

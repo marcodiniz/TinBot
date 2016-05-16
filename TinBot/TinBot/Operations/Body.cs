@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Microsoft.Maker.RemoteWiring;
 using Microsoft.Maker.Serial;
+using TinBot.Helpers;
 using TinBot.Portable;
 using static TinBot.Helpers.DispatcherHelper;
 
@@ -14,6 +15,8 @@ namespace TinBot.Operations
 {
     public class Body
     {
+        private const byte _phoneChargePin = 13;
+
         private readonly UsbSerial _usbSerial;
         private readonly BluetoothSerial _bluetoothSerial;
         private Action _connect;
@@ -35,7 +38,6 @@ namespace TinBot.Operations
         private DispatcherTimer _checkConnectiontimer = new DispatcherTimer();
         private int failConnectionCount = 0;
 
-
         public Body(BluetoothSerial bluetoothSerial)
         {
             _bluetoothSerial = bluetoothSerial;
@@ -55,8 +57,7 @@ namespace TinBot.Operations
             _checkConnectiontimer.Interval = TimeSpan.FromSeconds(30);
             _checkConnectiontimer.Tick += CheckConnectiontimerOnTick;
         }
-
-
+        
         public Body(UsbSerial usbSerial)
         {
             _usbSerial = usbSerial;
@@ -75,30 +76,6 @@ namespace TinBot.Operations
             _checkConnectiontimer.Tick += CheckConnectiontimerOnTick;
         }
 
-        private void CheckConnectiontimerOnTick(object sender, object o)
-        {
-            if (Arduino == null)
-                return;
-
-            Arduino.pinMode("A0", PinMode.ANALOG);
-            Arduino.pinMode("A1", PinMode.INPUT);
-            Arduino.pinMode("A2", PinMode.OUTPUT);
-            var a0 = Arduino.analogRead("A0");
-            var a1 = Arduino.digitalRead(1);
-            var a2 = Arduino.digitalRead(2);
-            if ((a0 < 100 || a0 > 1000))
-            {
-                if (failConnectionCount++ > 3)
-                {
-                    Setup();
-                    failConnectionCount = 0;
-                }
-            }
-            else
-                failConnectionCount = 0;
-        }
-
-
         public async void Setup()
         {
             await ExecuteOnMainThread(() => _checkConnectiontimer.Stop());
@@ -111,15 +88,17 @@ namespace TinBot.Operations
 
             if (_bluetoothSerial != null)
             {
+                Arduino?.Dispose();
                 Arduino = new RemoteDevice(_bluetoothSerial);
                 await Task.Delay(1000);
-                _bluetoothSerial.begin(57600, SerialConfig.SERIAL_8N1);
+                await ExecuteOnMainThread(()=>_bluetoothSerial.begin(57600, SerialConfig.SERIAL_8N1));
             }
             else
             {
+                Arduino?.Dispose();
                 Arduino = new RemoteDevice(_usbSerial);
                 await Task.Delay(1000);
-                _usbSerial.begin(57600, SerialConfig.SERIAL_8N1);
+                await ExecuteOnMainThread(()=>_usbSerial.begin(57600, SerialConfig.SERIAL_8N1));
             }
 
             SerialOut = new SerialOutController(Arduino, 12, 8, 7);
@@ -157,26 +136,68 @@ namespace TinBot.Operations
             await ExecuteOnMainThread(() => _checkConnectiontimer.Start());
         }
 
+        private void CheckConnectiontimerOnTick(object sender, object o)
+        {
+            if (Arduino == null)
+                return;
+
+            Arduino.pinMode("A0", PinMode.ANALOG);
+            Arduino.pinMode("A1", PinMode.INPUT);
+            Arduino.pinMode("A2", PinMode.OUTPUT);
+            var a0 = Arduino.analogRead("A0");
+            var a1 = Arduino.digitalRead(1);
+            var a2 = Arduino.digitalRead(2);
+            if ((a0 < 100 || a0 > 1000))
+            {
+                if (failConnectionCount++ > 3)
+                {
+                    Setup();
+                    failConnectionCount = 0;
+                }
+            }
+            else
+                failConnectionCount = 0;
+        }
+       
         private async Task ArduinoOnDeviceReady()
         {
             ConnectionNotify?.Invoke(this, "Arduino Ready");
 
-            await Task.Delay(700);
-            await ServoHeadY.Attach();
-            await Task.Delay(700);
-            await ServoHeadX.Attach();
-            await Task.Delay(700);
-            await ServoHand.Attach();
-            await Task.Delay(700);
-            await ServoRightArm.Attach();
-            await Task.Delay(700);
-            await ServoLeftArm.Attach();
-            await Task.Delay(700);
-            await ServoTorso.Attach();
+            await AttachServos();
             await Task.Delay(300);
             await SerialOut.Reset(false);
 
+            Arduino.SafePinMode(_phoneChargePin, PinMode.OUTPUT);
+
             IsReady = true;
+        }
+
+        public async Task AttachServos()
+        {
+            foreach (var servo in Servos.Values.Where(x => !x.IsAttached))
+            {
+                Task.Delay(100).Wait();
+                await servo.Attach();
+            }
+        }
+
+        public async Task DeAttachServos()
+        {
+            foreach (var servo in Servos.Values.Where(x => x.IsAttached))
+            {
+                Task.Delay(50).Wait();
+                await servo.Deattach();
+            }
+        }
+
+        public async Task StartPhoneCharge()
+        {
+            await Arduino.DigitalWriteAwaitable(_phoneChargePin, true);
+        }
+
+        public async Task StopPhoneCharge()
+        {
+            await Arduino.DigitalWriteAwaitable(_phoneChargePin, false);
         }
     }
 }
