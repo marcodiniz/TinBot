@@ -1,0 +1,2 @@
+MainPackage=D:\OneDrive\FOLDERS\Source\Repos\TinBot\TinBot\TinBot\bin\ARM\Release\TinBot_1.0.0.0_ARM.appx
+SymbolPackage=D:\OneDrive\FOLDERS\Source\Repos\TinBot\TinBot\TinBot\AppPackages\TinBot_1.0.0.0_Test\TinBot_1.0.0.0_ARM.appxsym
