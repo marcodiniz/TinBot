@@ -72,7 +72,7 @@ namespace TinBot.Operations
                 ConnectionNotify?.Invoke(this, "USB perdido: " + message);
             };
 
-            _checkConnectiontimer.Interval = TimeSpan.FromSeconds(30);
+            _checkConnectiontimer.Interval = TimeSpan.FromSeconds(90);
             _checkConnectiontimer.Tick += CheckConnectiontimerOnTick;
         }
 

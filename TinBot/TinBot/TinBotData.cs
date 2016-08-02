@@ -69,8 +69,8 @@ namespace TinBot
 
         private static async Task Setup()
         {
-            LibTimer = new Timer(s => SyncActionLibrary(), null, TimeSpan.FromSeconds(20), TimeSpan.FromSeconds(90));
-            QueueTimer = new Timer(s => SyncQueue(), null, TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(30));
+            LibTimer = new Timer(s => SyncActionLibrary(), null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(60));
+            QueueTimer = new Timer(s => SyncQueue(), null, TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(10));
             _settings = ApplicationData.Current.LocalSettings;
 
             var result = await ReadSetting<ActionsContainer>("ActionsLib");
@@ -90,7 +90,7 @@ namespace TinBot
                 var client = new HttpClient();
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.UserAgent.ParseAdd("Chrome/22.0.1229.94");
-                client.DefaultRequestHeaders.Authorization = _authHeader;
+                //client.DefaultRequestHeaders.Authorization = _authHeader;
                 var response = client.GetAsync(ApiQueueUrl, HttpCompletionOption.ResponseContentRead).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -127,7 +127,7 @@ namespace TinBot
             var client = new HttpClient();
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.UserAgent.ParseAdd("Chrome/22.0.1229.94");
-            client.DefaultRequestHeaders.Authorization = _authHeader;
+            //client.DefaultRequestHeaders.Authorization = _authHeader;
             client.Timeout = TimeSpan.FromSeconds(30);
             try
             {

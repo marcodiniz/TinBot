@@ -20,7 +20,7 @@ namespace TinBot
 
         public Ear()
         {
-            Recognizer = new SpeechRecognizer(SpeechRecognizer.SystemSpeechLanguage);
+            Recognizer = new SpeechRecognizer(new Language("pt-BR"));
 
             Recognizer.ContinuousRecognitionSession.ResultGenerated += ContinuousRecognitionSessionOnResultGenerated;
         }
@@ -83,11 +83,11 @@ namespace TinBot
                     "Tim boti, " + x,
                     "Tim bót, " + x,
                     "Tim bótí, " + x,
-                    x+ "Timbóti",
-                    x+"Tim bóti",
-                    x+"Tim boti",
-                    x+"Tim bót",
-                    x+ "Tim bótí" ,
+                    x + "Timbóti",
+                    x + "Tim bóti",
+                    x + "Tim boti",
+                    x + "Tim bót",
+                    x + "Tim bótí",
                 });
                 Recognizer.Constraints.Add(new SpeechRecognitionListConstraint(phrases, listenKey.Do));
             }
@@ -98,7 +98,8 @@ namespace TinBot
         private void ContinuousRecognitionSessionOnResultGenerated(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
             var result = args.Result;
-            if (result.Status == SpeechRecognitionResultStatus.Success && result.Confidence != SpeechRecognitionConfidence.Rejected)
+            if (result.Status == SpeechRecognitionResultStatus.Success &&
+                result.Confidence == SpeechRecognitionConfidence.High)
             {
                 var tags = result.Constraint.Tag.Split(';');
                 var actionName = tags[new Random().Next(tags.Length)];

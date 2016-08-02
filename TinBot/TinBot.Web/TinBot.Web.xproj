@@ -23,7 +23,6 @@
     <DnxInvisibleContent Include="package.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TinBot.Common\TinBot.Common.csproj" />
     <ProjectReference Include="..\TinBot.Portable\TinBot.Portable.csproj" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\DNX\Microsoft.DNX.targets" Condition="'$(VSToolsPath)' != ''" />

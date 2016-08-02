@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "exports": {
+    "TinBot.Portable/1.0.0": {
+      "type": "project",
+      "framework": ".NETPortable,Version=v4.5,Profile=Profile7",
+      "compile": {
+        "bin/Release/TinBot.Portable.dll": {}
+      },
+      "runtime": {
+        "bin/Release/TinBot.Portable.dll": {}
+      }
+    }
+  }
+}
