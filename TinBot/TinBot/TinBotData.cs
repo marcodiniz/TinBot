@@ -30,11 +30,10 @@ namespace TinBot
 
         private static ApplicationDataContainer _settings;
 
-        private static AuthenticationHeaderValue _authHeader =>
-            AuthenticationHeaderValue.Parse("basic " +
-                                            Convert.ToBase64String(
-                                                Encoding.ASCII.GetBytes($"{ApiUser}:{ApiPassword}")));
-
+        //private static AuthenticationHeaderValue _authHeader =>
+        //    AuthenticationHeaderValue.Parse("basic " +
+        //                                    Convert.ToBase64String(
+        //                                        Encoding.ASCII.GetBytes($"{ApiUser}:{ApiPassword}")));
 
         public static ActionsContainer ActionsLib { get; set; }
 
@@ -74,10 +73,10 @@ namespace TinBot
             _settings = ApplicationData.Current.LocalSettings;
 
             var result = await ReadSetting<ActionsContainer>("ActionsLib");
-            ActionsLib = result?? new ActionsContainer();
+            ActionsLib = result ?? new ActionsContainer();
             var rest = ActionsLib["rest"];
             if (rest != null)
-                ExecuteOnMainThread(() => ActionsQueue.Add(ActionsLib["rest"]));
+                await ExecuteOnMainThread(() => ActionsQueue.Add(ActionsLib["rest"]));
         }
 
         private static void SyncQueue()
@@ -113,7 +112,6 @@ namespace TinBot
                         client.DeleteAsync(ApiQueueUrl).Wait();
 
                     ActionRequestArrived?.Invoke(null, EventArgs.Empty);
-
                 }
             }
             catch (Exception ex)
@@ -136,8 +134,8 @@ namespace TinBot
                 if (response.IsSuccessStatusCode)
                 {
                     var str = response.Content.ReadAsStringAsync().Result;
-                    SaveSetting("ActionsLib",str).Wait();
                     ActionsLib = JsonConvert.DeserializeObject<ActionsContainer>(str);
+                    SaveSetting("ActionsLib", ActionsLib).GetAwaiter();
                 }
             }
             catch (Exception ex)
@@ -147,7 +145,6 @@ namespace TinBot
 
         internal static async Task<bool> SaveSetting(string key, object value)
         {
-
             var file =
                 await ApplicationData.Current.LocalFolder.CreateFileAsync(key, CreationCollisionOption.ReplaceExisting);
             using (Stream fileStream = await file.OpenStreamForWriteAsync())

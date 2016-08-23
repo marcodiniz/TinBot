@@ -20,7 +20,7 @@ namespace TinBot
 
         public Ear()
         {
-            Recognizer = new SpeechRecognizer(new Language("pt-BR"));
+            Recognizer = new SpeechRecognizer(SpeechRecognizer.SystemSpeechLanguage);
 
             Recognizer.ContinuousRecognitionSession.ResultGenerated += ContinuousRecognitionSessionOnResultGenerated;
         }

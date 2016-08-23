@@ -19,13 +19,6 @@ namespace TinBot.Operations
 
         private readonly UsbSerial _usbSerial;
         private readonly BluetoothSerial _bluetoothSerial;
-        private Action _connect;
-        public ServoController ServoHand { get; private set; }
-        public ServoController ServoRightArm { get; private set; }
-        public ServoController ServoLeftArm { get; private set; }
-        public ServoController ServoTorso { get; private set; }
-        public ServoController ServoHeadY { get; private set; }
-        public ServoController ServoHeadX { get; private set; }
         public Dictionary<ETinBotServo, ServoController> Servos { get; set; }
 
         public SerialOutController SerialOut { get; set; }
@@ -35,8 +28,8 @@ namespace TinBot.Operations
 
         public event EventHandler<string> ConnectionNotify;
 
-        private DispatcherTimer _checkConnectiontimer = new DispatcherTimer();
-        private int failConnectionCount = 0;
+        private readonly DispatcherTimer _checkConnectiontimer = new DispatcherTimer();
+        private int _failConnectionCount = 0;
 
         public Body(BluetoothSerial bluetoothSerial)
         {
@@ -57,7 +50,7 @@ namespace TinBot.Operations
             _checkConnectiontimer.Interval = TimeSpan.FromSeconds(30);
             _checkConnectiontimer.Tick += CheckConnectiontimerOnTick;
         }
-        
+
         public Body(UsbSerial usbSerial)
         {
             _usbSerial = usbSerial;
@@ -76,7 +69,7 @@ namespace TinBot.Operations
             _checkConnectiontimer.Tick += CheckConnectiontimerOnTick;
         }
 
-        public async void Setup()
+        public async Task Setup()
         {
             await ExecuteOnMainThread(() => _checkConnectiontimer.Stop());
 
@@ -91,14 +84,14 @@ namespace TinBot.Operations
                 Arduino?.Dispose();
                 Arduino = new RemoteDevice(_bluetoothSerial);
                 await Task.Delay(1000);
-                await ExecuteOnMainThread(()=>_bluetoothSerial.begin(57600, SerialConfig.SERIAL_8N1));
+                await ExecuteOnMainThread(() => _bluetoothSerial.begin(57600, SerialConfig.SERIAL_8N1));
             }
             else
             {
                 Arduino?.Dispose();
                 Arduino = new RemoteDevice(_usbSerial);
                 await Task.Delay(1000);
-                await ExecuteOnMainThread(()=>_usbSerial.begin(57600, SerialConfig.SERIAL_8N1));
+                await ExecuteOnMainThread(() => _usbSerial.begin(57600, SerialConfig.SERIAL_8N1));
             }
 
             SerialOut = new SerialOutController(Arduino, 12, 8, 7);
@@ -116,21 +109,14 @@ namespace TinBot.Operations
 
             Arduino.DeviceReady += async () => await ArduinoOnDeviceReady();
 
-            ServoHand = new ServoController(Arduino, 09);
-            ServoRightArm = new ServoController(Arduino, 05);
-            ServoLeftArm = new ServoController(Arduino, 06, true);
-            ServoTorso = new ServoController(Arduino, 03, delay: 10);
-            ServoHeadY = new ServoController(Arduino, 11);
-            ServoHeadX = new ServoController(Arduino, 10);
-
             Servos = new Dictionary<ETinBotServo, ServoController>()
             {
-                [ETinBotServo.ServoHand] = ServoHand,
-                [ETinBotServo.ServoHeadX] = ServoHeadX,
-                [ETinBotServo.ServoHeadY] = ServoHeadY,
-                [ETinBotServo.ServoLeftArm] = ServoLeftArm,
-                [ETinBotServo.ServoRightArm] = ServoRightArm,
-                [ETinBotServo.ServoTorso] = ServoTorso,
+                [ETinBotServo.ServoHand] = new ServoController(Arduino, 09),
+                [ETinBotServo.ServoHeadX] = new ServoController(Arduino, 05),
+                [ETinBotServo.ServoHeadY] = new ServoController(Arduino, 06),
+                [ETinBotServo.ServoLeftArm] = new ServoController(Arduino, 03, true),
+                [ETinBotServo.ServoRightArm] = new ServoController(Arduino, 11),
+                [ETinBotServo.ServoTorso] = new ServoController(Arduino, 10)
             };
 
             await ExecuteOnMainThread(() => _checkConnectiontimer.Start());
@@ -149,23 +135,23 @@ namespace TinBot.Operations
             var a2 = Arduino.digitalRead(2);
             if ((a0 < 100 || a0 > 1000))
             {
-                if (failConnectionCount++ > 3)
+                if (_failConnectionCount++ > 3)
                 {
                     Setup();
-                    failConnectionCount = 0;
+                    _failConnectionCount = 0;
                 }
             }
             else
-                failConnectionCount = 0;
+                _failConnectionCount = 0;
         }
-       
+
         private async Task ArduinoOnDeviceReady()
         {
             ConnectionNotify?.Invoke(this, "Arduino Ready");
 
-            await AttachServos();
-            await Task.Delay(300);
             await SerialOut.Reset(false);
+            await Task.Delay(300);
+            await AttachServos();
 
             Arduino.SafePinMode(_phoneChargePin, PinMode.OUTPUT);
 
@@ -174,20 +160,22 @@ namespace TinBot.Operations
 
         public async Task AttachServos()
         {
-            foreach (var servo in Servos.Values.Where(x => !x.IsAttached))
-            {
-                Task.Delay(100).Wait();
-                await servo.Attach();
-            }
+            if (IsReady)
+                foreach (var servo in Servos.Values.Where(x => !x.IsAttached))
+                {
+                    Task.Delay(100).Wait();
+                    await servo.Attach();
+                }
         }
 
         public async Task DeAttachServos()
         {
-            foreach (var servo in Servos.Values.Where(x => x.IsAttached))
-            {
-                Task.Delay(50).Wait();
-                await servo.Deattach();
-            }
+            if (IsReady)
+                foreach (var servo in Servos.Values.Where(x => x.IsAttached))
+                {
+                    Task.Delay(50).Wait();
+                    await servo.Deattach();
+                }
         }
 
         public async Task StartPhoneCharge()

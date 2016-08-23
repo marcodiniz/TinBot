@@ -51,14 +51,14 @@ namespace TinBot
             this.InitializeComponent();
             var keepScreenOnRequest = new Windows.System.Display.DisplayRequest();
             keepScreenOnRequest.RequestActive();
-            ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+            //ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
             DispatcherHelper.Dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
             DispatcherHelper.SyncContext = TaskScheduler.FromCurrentSynchronizationContext();
 
-            _usb = new UsbSerial("VID_2341", "PID_0043");
+            _usb = new UsbSerial("VID_1A86", "PID_7523");
             _bluetooth = new BluetoothSerial("TinBot");
-            //_body = new Body(_usb);
-            _body = new Body(_bluetooth);
+            _body = new Body(_usb);
+            //_body = new Body(_bluetooth);
             _commands = new Operations.Commands(media, _body, Ear,
                 new Dictionary<Storyboard, int>()
                 {

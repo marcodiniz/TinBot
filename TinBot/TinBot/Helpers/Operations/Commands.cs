@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media.Animation;
 using TinBot.Helpers;
 using TinBot.Portable;
 using static TinBot.Helpers.DispatcherHelper;
+using static TinBot.TinBotData;
 
 namespace TinBot.Operations
 {
@@ -50,11 +51,11 @@ namespace TinBot.Operations
 
             SetupStandByBehaviors();
 
-            TinBotData.ActionRequestArrived += (s, a) => ProcessActionsQueue();
+            ActionRequestArrived += (s, a) => ProcessActionsQueue();
 
             Ear.ActionRequested += (sender, action) =>
             {
-                TinBotData.ActionsQueue.Add(action);
+                ExecuteOnMainThread(() => ActionsQueue.Add(action)).Wait();
                 ProcessActionsQueue();
             };
         }
@@ -76,14 +77,14 @@ namespace TinBot.Operations
 
         private void ProcessActionsQueue()
         {
-            if (!_body.IsReady) return;
+            //if (!_body.IsReady) return;
 
             var _lock = "lock";
             lock (_lock)
             {
                 if (_actionsStackCount >= 1) return;
 
-                if (!TinBotData.ActionsQueue.Any())
+                if (!ActionsQueue.Any())
                 {
                     PhoneState.SetStandByOn();
                     return;
@@ -95,8 +96,8 @@ namespace TinBot.Operations
                     Task.Delay(1000).Wait();
                 }
 
-                var nextAction = TinBotData.ActionsQueue[0];
-                ExecuteOnMainThread(() => TinBotData.ActionsQueue.RemoveAt(0)).Wait();
+                var nextAction = ActionsQueue[0];
+                ExecuteOnMainThread(() => ActionsQueue.RemoveAt(0)).Wait();
 
                 if (nextAction != null)
                 {
@@ -130,14 +131,23 @@ namespace TinBot.Operations
                             var sb = Faces[((FaceAction)action).TinBotFaces];
                             await ExecuteOnMainThread(() => PlayAndPause(sb));
                             break;
+                        case EActionType.Toggle:
+                            if (_body.IsReady)
+                            {
+                                await ExecuteToggle((ToggleAction)action);
+                            }
+                            break;
                         case EActionType.Move:
-                            var moveAction = (MovementAcion)action;
-                            if (_body.Servos.ContainsKey(moveAction.Servo))
-                                await Move(moveAction);
+                            if (_body.IsReady)
+                            {
+                                var moveAction = (MovementAcion)action;
+                                if (_body.Servos.ContainsKey(moveAction.Servo))
+                                    await Move(moveAction);
+                            }
                             break;
                         case EActionType.Saved:
-                            var found = TinBotData.ActionsLib.AllActions().FirstOrDefault(
-                                x => x.Name.Equals(((SavedAction)action).ActionName, StringComparison.OrdinalIgnoreCase));
+                            var found = ActionsLib.AllActions().FirstOrDefault(
+                                x => x.Name.Equals(((SavedAction) action).ActionName, StringComparison.OrdinalIgnoreCase));
                             if (found != null)
                                 await ExecuteAction(found);
                             break;
@@ -156,10 +166,6 @@ namespace TinBot.Operations
                                 await Task.WhenAll(waiters);
                             }
                             break;
-                        case EActionType.Toggle:
-                            await ExecuteToggle((ToggleAction)action);
-                            break;
-
                     }
                     await Task.Delay(action.ExtraWaitTime);
                 }

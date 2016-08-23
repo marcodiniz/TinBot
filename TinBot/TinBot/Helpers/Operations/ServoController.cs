@@ -14,7 +14,7 @@ namespace TinBot.Operations
     public class ServoController
     {
 
-        public ServoController(RemoteDevice device, byte pin, bool inverse = false, int delay = 5)
+        public ServoController(RemoteDevice device, byte pin, bool inverse = false, int delay = 10)
         {
             _inverse = inverse;
             Device = device;
